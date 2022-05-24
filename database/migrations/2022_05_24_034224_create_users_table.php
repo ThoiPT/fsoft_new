@@ -38,12 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recruit_skills');
-        Schema::dropIfExists('skills');
-        Schema::dropIfExists('vacancies');
-        Schema::dropIfExists('departments');
-        Schema::dropIfExists('c_v_s');
-        Schema::dropIfExists('recruits');
         Schema::dropIfExists('users');
     }
 };

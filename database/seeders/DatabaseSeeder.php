@@ -22,13 +22,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'name' => 'Administrator',
-            'role' => UserRole::Admin,
-            'email' => 'admin@gmail.com'
-        ]);
 
-        User::factory(10)->create();
 
         $arr_skill = ['CSS', 'HTML', 'JS', 'PHP', 'NodeJs', 'Laravel', 'Python', 'Java', 'C', 'C++', 'C#', 'Ruby'];
         foreach($arr_skill as $v){
@@ -38,10 +32,19 @@ class DatabaseSeeder extends Seeder
         }
 
         Department::factory(10)->create();
+
+        User::factory()->create([
+            'name' => 'Administrator',
+            'role' => UserRole::Admin,
+            'email' => 'admin@gmail.com'
+        ]);
+
+        User::factory(10)->create();
         Vacancy::factory(10)->create();
         Recruit::factory(10)->create();
         RecruitSkill::factory(10)->create();
         CV::factory(10)->create();
+
 
     }
 }
