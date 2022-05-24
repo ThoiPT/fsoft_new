@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('recruits.index');
 });
 
 Route::resource('recruits', RecruitController::class);
@@ -35,7 +35,6 @@ Route::resource('vacancies', VacancyController::class);
 Route::resource('recruit_skills', RecruitSkillController::class);
 
 //Other Controller
-
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');

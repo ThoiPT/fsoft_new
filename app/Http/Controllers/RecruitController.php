@@ -15,7 +15,7 @@ class RecruitController extends Controller
     public function index()
     {
         $list = Recruit::all();
-        return view('Recruit.list',compact('list'));
+        return view('Recruit.list', compact('list'));
     }
 
     /**
