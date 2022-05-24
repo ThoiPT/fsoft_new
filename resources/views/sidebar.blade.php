@@ -15,6 +15,7 @@
             <div class="info">
                 <a href="/dashboard" class="d-block"></a>
                 <a href="/logout" class="d-block">Logout</a>
+                <p style="color: white; font-weight: bold" href="" class="d-block">{{auth()->user()->email}}</p>
             </div>
         </div>
         <!-- SidebarSearch Form -->
