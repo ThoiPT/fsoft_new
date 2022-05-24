@@ -14,7 +14,8 @@ class Department extends Model
         'description',
     ];
 
-    public function users(){
+    public function users()
+    {
         $this->hasMany(User::class);
     }
 }
