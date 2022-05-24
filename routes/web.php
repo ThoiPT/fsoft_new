@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return redirect()->route('recruits.index');
 });
 
 Route::resource('recruits', RecruitController::class)->middleware(['auth']);
