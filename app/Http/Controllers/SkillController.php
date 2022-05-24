@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Skill;
 use Illuminate\Http\Request;
+use stdClass;
 
 class SkillController extends Controller
 {
@@ -13,7 +15,8 @@ class SkillController extends Controller
      */
     public function index()
     {
-        //
+        $list = Skill::all();
+        return view('Skill.list', compact('list'));
     }
 
     /**
@@ -34,7 +37,17 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $add = Skill::create($request->all());
+
+        if ($add) {
+            $stt_message = 'success';
+            $message = 'Sữa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Sữa thất bại';
+        }
+
+        return redirect()->route('skills.index')->with($stt_message, $message);
     }
 
     /**
@@ -45,7 +58,8 @@ class SkillController extends Controller
      */
     public function show($id)
     {
-        return view('Skill.list');
+        $detail = Skill::find($id);
+        return view('Skill.list', compact('detail'));
     }
 
     /**
@@ -56,7 +70,8 @@ class SkillController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = Skill::find($id);
+        return view('Skill.list', compact('detail'));
     }
 
     /**
@@ -68,7 +83,17 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Skill::find($id)->update($request->all());
+
+        if ($update) {
+            $stt_message = 'success';
+            $message = 'Sữa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Sữa thất bại';
+        }
+
+        return redirect()->route('recruits.edit')->with($stt_message, $message);
     }
 
     /**
@@ -79,6 +104,20 @@ class SkillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Skill::find($id)->delete();
+
+        if ($delete) {
+            $stt_message = 'success';
+            $message = 'Xóa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Xóa thất bại';
+        }
+
+        $res = new stdClass;
+        $res->status = $stt_message;
+        $res->message = $message;
+
+        return response()->json($res);
     }
 }

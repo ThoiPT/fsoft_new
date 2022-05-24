@@ -92,7 +92,7 @@ class RecruitController extends Controller
     {
         $update = Recruit::find($id)->update($request->all());
 
-        foreach ($request->skills as $v) {
+        foreach ($request->skills as $v) {//id of table skills
             $update1 = RecruitSkill::where('recruit_id', $id)->create([
                 'skill_id' => $v,
             ]);
