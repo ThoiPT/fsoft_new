@@ -3,9 +3,8 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                {{-- <h3>{{ count($request) }}</h3> --}}
-                <h3>55</h3>
-                <p>Request All (Open)</p>
+                 <h3>{{ count($recruit_list) }}</h3>
+                <p>Recruit All (Open)</p>
             </div>
             <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -19,8 +18,8 @@
         <div class="small-box bg-success">
             <div class="inner">
                 {{-- <h3>{{ count($totalSkill) }}</h3> --}}
-                <h3>55</h3>
-                <p>Skill - Job (Open)</p>
+                <h3>{{ count($vacancy_list) }}</h3>
+                <p>Vacancy All (Open)</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -34,7 +33,7 @@
         <div class="small-box bg-warning">
             <div class="inner">
                 {{-- <h3>{{count($totalAccount)}}</h3> --}}
-                <h3>55</h3>
+                <h3>{{ count($account_list) }}</h3>
                 <p>Account</p>
             </div>
             <div class="icon">
@@ -49,7 +48,7 @@
         <div class="small-box bg-danger">
             <div class="inner">
                 {{-- <h3>{{count($totalCV)}}</h3> --}}
-                <h3>55</h3>
+                <h3>{{ count($cvOnboard) }}</h3>
                 <p>Curriculum Vitae (Onboard)</p>
             </div>
             <div class="icon">

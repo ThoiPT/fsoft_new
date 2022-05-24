@@ -38,7 +38,7 @@ Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['a
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/logout',[HomeController::class,'logout']);
 
 Auth::routes();

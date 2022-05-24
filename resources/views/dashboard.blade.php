@@ -70,6 +70,7 @@
 {{--                                    <th rowspan="1" colspan="1">Action</th>--}}
                                 </tr>
                             </tfoot>
+
                         </table>
 
                     </div>
