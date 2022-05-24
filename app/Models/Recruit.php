@@ -38,8 +38,20 @@ class Recruit extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function recruit_skill()
+    {
+        return $this->hasMany(RecruitSkill::class);
+    }
+
     public function skills()
     {
-        return $this->hasManyThrough(Skill::class, RecruitSkill::class);
+        return $this->hasManyThrough(
+            Skill::class,
+            RecruitSkill::class,
+            'recruit_id',
+            'id',
+            'id',
+            'skill_id'
+        );
     }
 }

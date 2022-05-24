@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
 use App\Models\Recruit;
 use App\Models\RecruitSkill;
+use App\Models\Skill;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -27,7 +30,10 @@ class RecruitController extends Controller
      */
     public function create()
     {
-        return view('Recruit.create');
+        $vacancy_list =  Vacancy::all();
+        $skill_list = Skill::all();
+
+        return view('Recruit.create', compact('vacancy_list', 'skill_list'));
     }
 
     /**
@@ -66,7 +72,12 @@ class RecruitController extends Controller
     public function show($id)
     {
         $detail = Recruit::find($id);
-        return view('Recruit.list', compact('detail'));
+        // $detail->skills return list skill of recruit
+
+        $vacancy_list =  Vacancy::all();
+        $skill_list = Skill::all();
+
+        return view('Recruit.list', compact('detail', 'vacancy_list', 'skill_list'));
     }
 
     /**
@@ -78,7 +89,11 @@ class RecruitController extends Controller
     public function edit($id)
     {
         $detail = Recruit::find($id);
-        return view('Recruit.edit', compact('detail'));
+
+        $vacancy_list =  Vacancy::all();
+        $skill_list = Skill::all();
+
+        return view('Recruit.update', compact('detail', 'vacancy_list', 'skill_list'));
     }
 
     /**
@@ -92,8 +107,11 @@ class RecruitController extends Controller
     {
         $update = Recruit::find($id)->update($request->all());
 
-        foreach ($request->skills as $v) {//id of table skills
+        $del = RecruitSkill::where('recruit_id', $id)->delete();
+
+        foreach ($request->skills as $v) { //id of table skills
             $update1 = RecruitSkill::where('recruit_id', $id)->create([
+                'recruit_id' => $id,
                 'skill_id' => $v,
             ]);
         }
@@ -106,7 +124,7 @@ class RecruitController extends Controller
             $message = 'Sữa thất bại';
         }
 
-        return redirect()->route('recruits.edit')->with($stt_message, $message);
+        return redirect()->route('recruits.index')->with($stt_message, $message);
     }
 
     /**

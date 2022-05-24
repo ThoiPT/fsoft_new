@@ -26,13 +26,13 @@ Route::get('/', function () {
     return redirect()->route('recruits.index');
 });
 
-Route::resource('recruits', RecruitController::class);
-Route::resource('skills', SkillController::class);
-Route::resource('departments', DepartmentController::class);
-Route::resource('cv', CvController::class);
-Route::resource('users', UserController::class);
-Route::resource('vacancies', VacancyController::class);
-Route::resource('recruit_skills', RecruitSkillController::class);
+Route::resource('recruits', RecruitController::class)->middleware(['auth']);
+Route::resource('skills', SkillController::class)->middleware(['auth']);
+Route::resource('departments', DepartmentController::class)->middleware(['auth']);
+Route::resource('cv', CvController::class)->middleware(['auth']);
+Route::resource('users', UserController::class)->middleware(['auth']);
+Route::resource('vacancies', VacancyController::class)->middleware(['auth']);
+Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['auth']);
 
 //Other Controller
 

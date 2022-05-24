@@ -97,7 +97,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/recruits/list" class="nav-link">
+                            <a href="/recruits" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Recruit List</p>
                             </a>

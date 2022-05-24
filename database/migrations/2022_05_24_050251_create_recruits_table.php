@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('exp');
             $table->string('level');
             $table->integer('numRecruit');
-            $table->datetime('open_at');
-            $table->datetime('close_at');
+            $table->date('open_at');
+            $table->date('close_at');
             $table->string('description');
             $table->string('status')->default(1);
             $table->unsignedBigInteger('user_id')->nullable();

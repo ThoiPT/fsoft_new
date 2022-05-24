@@ -68,7 +68,7 @@
                                             Action
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="/recruits/edit">Edit</a>
+                                            <a class="dropdown-item" href="/recruits/{{ $item->id }}/edit">Edit</a>
                                             <a class="dropdown-item" href="javascript:;" onclick=deleteConfirm({{ $item->id }})>Delete</a>
                                         </div>
                                     </div>
