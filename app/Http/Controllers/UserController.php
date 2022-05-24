@@ -120,7 +120,6 @@ class UserController extends Controller
         $res = new stdClass;
         $res->status = $stt_message;
         $res->message = $message;
-
         return response()->json($res);
     }
 }

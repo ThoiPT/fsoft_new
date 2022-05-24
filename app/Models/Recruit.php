@@ -43,6 +43,11 @@ class Recruit extends Model
         return $this->hasMany(RecruitSkill::class);
     }
 
+    public function cv()
+    {
+        return $this->hasOne(CV::class);
+    }
+
     public function skills()
     {
         return $this->hasManyThrough(
@@ -54,4 +59,17 @@ class Recruit extends Model
             'skill_id'
         );
     }
+
+    public function minusNumRecruit(){
+        $this->update([
+            'numRecruit' => $this->numRecruit-1
+        ]);
+    }
+
+    public function plusNumRecruit(){
+        $this->update([
+            'numRecruit' => $this->numRecruit+1
+        ]);
+    }
+
 }

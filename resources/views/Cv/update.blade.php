@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-    <div class="col-md-6" style="max-width: 100%">
+    <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements disabled -->
         <div class="card card-warning">
             <div class="card-header">
@@ -8,13 +8,14 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form action="/cv/update/{{$cvitaes -> id}}" method="POST">
+                <form action="/cv/{{$detail -> id}}" method="POST">
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
                         <label>Add to</label>
-                        <select name="request_id" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
-                            @foreach($rqData as $cvd)
-                                <option selected="selected" value="{{ $cvd -> id}}">{{ $cvd->title }}</option>
+                        <select name="recruit_id" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+                            @foreach($recruit_list as $item)
+                                <option  selected="selected" value="{{$item -> id}}">{{$item -> title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -23,54 +24,61 @@
                         <label class="col-form-label" for="inputSuccess">
                             Full Name
                         </label>
-                        <input  type="text" class="form-control success" name="name" id="inputSuccess" value="{{ $cvitaes -> name }}">
+                        <input  type="text" class="form-control success" name="name" id="inputSuccess" value="{{ $detail -> name }}">
                     </div>
 
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
                             Phone Number
                         </label>
-                        <input type="text" class="form-control success" name="phone" id="inputSuccess"value="{{ $cvitaes -> phone }}">
+                        <input type="text" class="form-control success" name="phone" id="inputSuccess"value="{{ $detail -> phone }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputSuccess">
+                            Email
+                        </label>
+                        <input type="email" class="form-control success" name="email" id="inputSuccess"value="{{ $detail -> email }}">
                     </div>
 
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
                             Address
                         </label>
-                        <input type="text" class="form-control success" name="address" id="inputSuccess" value="{{ $cvitaes -> address }}">
+                        <input type="text" class="form-control success" name="address" id="inputSuccess" value="{{ $detail -> address }}">
                     </div>
 
-{{--                    <div class="form-group">--}}
-{{--                        <label class="col-form-label" for="inputSuccess">--}}
-{{--                            File--}}
-{{--                        </label>--}}
-{{--                        <input  type="text" class="form-control success" name="file" id="inputSuccess" value="{{ $cvitaes -> file }}">--}}
-{{--                    </div>--}}
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputSuccess">
+                            File
+                        </label>
+                        <input  type="text" class="form-control success" name="file" id="inputSuccess" value="{{ $detail -> file }}">
+                    </div>
 
-{{--                    <div class="form-group">--}}
-{{--                        <label class="col-form-label" for="inputSuccess">--}}
-{{--                            File--}}
-{{--                        </label>--}}
-{{--                        <input type="file" class="form-control success" name="file" id="inputSuccess" placeholder="File">--}}
-{{--                    </div>--}}
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputSuccess">
+                            File
+                        </label>
+                        <input required type="file" class="form-control success" name="file" id="inputSuccess" placeholder="File">
+                    </div>
 
                     <div class="col-sm-6">
                         <label class="col-form-label" for="inputSuccess">Status</label>
                         <div class="form-group clearfix">
                             <div class="icheck-success d-inline">
-                                <input type="radio" name="status" value="1" id="radioSuccess1">
+                                <input type="radio" name="status" value="{{ \App\Enums\Status::Interview }}" id="radioSuccess1">
                                 <label for="radioSuccess1">
                                     Interview
                                 </label>
                             </div><br>
                             <div class="icheck-info d-inline">
-                                <input type="radio" name="status" value="2" id="radioSuccess3">
+                                <input type="radio" name="status" value="{{ \App\Enums\Status::Offer }}" id="radioSuccess3">
                                 <label for="radioSuccess3">
                                     Offer
                                 </label>
                             </div><br>
                             <div class="icheck-warning d-inline">
-                                <input type="radio" name="status" value="3" id="radioSuccess4">
+                                <input type="radio" name="status" value="{{ \App\Enums\Status::Onboard }}" id="radioSuccess4">
                                 <label for="radioSuccess4">
                                     Onboard
                                 </label>

@@ -28,16 +28,30 @@
                             </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($list as $item)
                                 <tr class="odd">
-                                    <td class="dtr-control" tabindex="0"></td>
-                                    <td>
-                                        <small class="badge badge-info">Interview</small>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="dtr-control" tabindex="0">{{ $item -> id }}</td>
+                                    @if($item -> status == \App\Enums\Status::New)
+                                            <td>
+                                                <small class="badge badge-success">New</small>
+                                            </td>
+                                        @elseif($item -> status == \App\Enums\Status::Interview)
+                                            <td>
+                                                <small class="badge badge-warning">Interview</small>
+                                            </td>
+                                        @elseif($item -> status == \App\Enums\Status::Offer)
+                                            <td>
+                                                <small class="badge badge-info">Offer</small>
+                                            </td>
+                                    @else
+                                        <td>
+                                            <small class="badge badge-danger">Onboard</small>
+                                        </td>
+                                    @endif
+                                    <td>{{ $item -> recruit -> title ?? 'None' }}</td>
+                                    <td>{{ $item -> recruit -> user -> name ?? 'None' }}</td>
+                                    <td>{{ $item -> phone }}</td>
+                                    <td>{{ $item -> address }}</td>
                                     <td>
                                         Đang test
 {{--                                        <a href={{ asset('/uploads/'.$item->file) }} target="_blank">{{ $item -> file }}</a>--}}
@@ -51,12 +65,13 @@
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="/cv/create">New</a>
-                                                {{-- <a class="dropdown-item" href="/cv/update/{{$item -> id}}">Update</a> --}}
-                                                {{-- <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a> --}}
+                                                 <a class="dropdown-item" href="/cv/{{$item -> id}}/edit">Edit</a>
+                                                 <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
@@ -78,22 +93,46 @@
         <!-- /.card-body -->
     </div>
     <script>
-        function deleteConfirm(id)
-        {
+        function deleteConfirm(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?'
+                , text: "You won't be able to revert this!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#3085d6'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/cv/delete/" + id
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: "DELETE"
+                        , url: "/cv/" + id
+                        , }).done(function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Success'
+                                , 'success'
+                            ).then(c => {
+                                window.location.reload();
+                            })
+                        } else {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Failed'
+                                , 'error'
+                            )
+                        }
+                    });
                 }
             })
         }
+
     </script>
 @endsection
 

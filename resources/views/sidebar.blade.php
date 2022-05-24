@@ -121,7 +121,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/cv/list" class="nav-link">
+                            <a href="/cv" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>CV List</p>
                             </a>

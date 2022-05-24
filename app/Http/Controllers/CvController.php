@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CV;
+use App\Models\Recruit;
 use Illuminate\Http\Request;
+use stdClass;
 
 class CvController extends Controller
 {
@@ -13,7 +16,8 @@ class CvController extends Controller
      */
     public function index()
     {
-        //
+        $list = CV::all();
+        return view('Cv.list', compact('list'));
     }
 
     /**
@@ -23,7 +27,8 @@ class CvController extends Controller
      */
     public function create()
     {
-        return view('Cv.create');
+        $recruit_list = Recruit::where('status','=',1)->get();
+        return view('Cv.create',compact('recruit_list'));
     }
 
     /**
@@ -34,7 +39,17 @@ class CvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $add = CV::create($request->all());
+
+        if ($add) {
+            $stt_message = 'success';
+            $message = 'Thêm thành công';
+            $add -> recruit -> minusNumRecruit();
+        } else {
+            $stt_message = 'fail';
+            $message = 'Thêm thất bại';
+        }
+        return redirect()->route('cv.index')->with($stt_message, $message);
     }
 
     /**
@@ -56,7 +71,9 @@ class CvController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = CV::find($id);
+        $recruit_list = Recruit::where('status','=',1)->get();
+        return view('Cv.update', compact('detail','recruit_list'));
     }
 
     /**
@@ -68,7 +85,15 @@ class CvController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = CV::find($id)->update($request->all());
+        if ($update) {
+            $stt_message = 'success';
+            $message = 'Sữa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Sữa thất bại';
+        }
+        return redirect()->route('cv.index')->with($stt_message, $message);
     }
 
     /**
@@ -79,6 +104,20 @@ class CvController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = CV::find($id)->delete();
+
+        if ($delete) {
+            $stt_message = 'success';
+            $message = 'Xóa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Xóa thất bại';
+        }
+
+        $res = new stdClass;
+        $res->status = $stt_message;
+        $res->message = $message;
+
+        return response()->json($res);
     }
 }

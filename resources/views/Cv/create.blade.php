@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-    <div class="col-md-6" style="max-width: 100%">
+    <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements disabled -->
         <div class="card card-warning">
             <div class="card-header">
@@ -8,29 +8,14 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data" id="frmCV">
+                <form action="{{ route('cv.store') }}" method="POST" enctype="multipart/form-data" id="frmCV">
                     @csrf
-                    {{--notification--}}
-                    {{-- @if(\Illuminate\Support\Facades\Session::has('mes'))
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <h5><i class="icon fas fa-check"></i>
-                                {{ \Illuminate\Support\Facades\Session::get('mes') }}
-                            </h5>
-                            Continue add or
-                            <a style="font-weight: bold; color: floralwhite" href="{{ route('get.cv.list') }}">
-                                Go to List of Curriculum Vitae
-                            </a>
-                        </div>
-                    @endif --}}
-
                     <div class="form-group" data-select2-id="74">
                         <label>Add to</label>
-                        <select name="request_id" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
-
-                                <option selected="selected" value="">
-
-                                </option>
+                        <select name="recruit_id" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+                            @foreach($recruit_list as $item)
+                                <option selected="selected" value="{{ $item -> id }}">{{ $item -> title }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -55,13 +40,25 @@
                         <input type="email" class="form-control success" name="email" id="inputSuccess" placeholder="abcd@gmail.com">
                     </div>
 
-                    <div hidden class="form-group">
+                    <div class="col-sm-6">
                         <label class="col-form-label" for="inputSuccess">
                             Gender
                         </label>
-                        <input type="ra" class="form-control success" name="status" id="inputSuccess" value="0">
+                        <div class="form-group clearfix">
+                            <div class="icheck-success d-inline">
+                                <input type="radio" name="gender" value="0" id="radioSuccess1">
+                                <label for="radioSuccess1">Male</label>
+                            </div><br>
+                            <div class="icheck-danger d-inline">
+                                <input type="radio" name="gender" value="1" id="radioSuccess3">
+                                <label for="radioSuccess3">Female</label>
+                            </div><br>
+                            <div class="icheck-warning d-inline">
+                                <input type="radio" name="gender" value="2" id="radioSuccess4">
+                                <label for="radioSuccess4">Other</label>
+                            </div><br>
+                        </div>
                     </div>
-
 
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
@@ -75,6 +72,19 @@
                         </label>
                         <input type="file" class="form-control success" name="file" id="inputSuccess" placeholder="File">
                     </div>
+{{--                    <div class="col-sm-6">--}}
+
+{{--                        <div class="form-group clearfix">--}}
+{{--                            <div class="icheck-success d-inline">--}}
+{{--                                <input type="radio" name="gender" value="0" id="radioSuccess5">--}}
+{{--                                <label for="radioSuccess5">ON</label>--}}
+{{--                            </div><br>--}}
+{{--                            <div class="icheck-danger d-inline">--}}
+{{--                                <input type="radio" name="gender" value="1" id="radioSuccess6">--}}
+{{--                                <label for="radioSuccess6">OFF</label>--}}
+{{--                            </div><br>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="form-group">
                         <button type="submit" class="btn btn-danger"style="color: white">Confirm</button>
                     </div>

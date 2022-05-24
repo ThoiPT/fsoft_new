@@ -17,6 +17,7 @@ class CV extends Model
         'address',
         'file',
         'recruit_id',
+        'status'
     ];
 
     public function recruit()

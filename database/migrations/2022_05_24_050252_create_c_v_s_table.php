@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('file')->default('test_Cv.pdf');
             $table->unsignedBigInteger('recruit_id');
+            $table->string('status')->default(Status::New);
             $table->timestamps();
 
             $table->foreign('recruit_id')->references('id')->on('recruits')
