@@ -40,7 +40,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+
+        $arr_vacancy = ['Fron End', 'HTML', 'JS', 'PHP', 'NodeJs', 'Laravel', 'Python', 'Java', 'C', 'C++', 'C#', 'Ruby'];
+        foreach($arr_vacancy as $v){
+            Vacancy::factory()->create([
+                'name' => $v
+            ]);
+        }
         Vacancy::factory(10)->create();
+
         Recruit::factory(10)->create();
         RecruitSkill::factory(10)->create();
         CV::factory(10)->create();
