@@ -117,8 +117,7 @@ class RecruitController extends Controller
      */
     public function destroy($id)
     {
-        // $delete = Recruit::find($id)->delete();
-        $delete = false;
+        $delete = Recruit::find($id)->delete();
 
         if ($delete) {
             $stt_message = 'success';
