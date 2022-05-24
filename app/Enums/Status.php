@@ -11,6 +11,6 @@ use BenSampo\Enum\Enum;
  */
 final class Status extends Enum
 {
-    const On = 1;
-    const Off = 0;
+    const On = '1';
+    const Off = '0';
 }

@@ -4,7 +4,6 @@
     #example1_paginate {
         display: none;
     }
-
 </style>
 <div class="card">
     <div class="card-header">
@@ -51,9 +50,15 @@
                             @foreach ( $list as $item )
                             <tr class="odd">
                                 <td class="dtr-control" tabindex="0">{{ $item->id }}</td>
-                                <td>{{ $item->status }}</td>
+                                <td class="text-center">
+                                    @if($item->status === App\Enums\Status::On)
+                                    <i class="fs-2 fa fa-toggle-on"></i>
+                                    @else
+                                    <i class="fs-2 fa fa-toggle-off"></i>
+                                    @endif
+                                </td>
                                 <td>{{ $item->title }}</td>
-                                <td>{{ $item->vacancy->name }}</td>
+                                <td>{{ $item->vacancy->name." - ". $item->level }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>123</td>
                                 <td>
@@ -62,7 +67,8 @@
                                             Action
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="/request/create">New</a>
+                                            <a class="dropdown-item" href="/recruits/edit">Edit</a>
+                                            <a class="dropdown-item" href="javascript:;" onClick='deleteConfirm({{$item->id}})'>Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -80,19 +86,42 @@
 <script>
     function deleteConfirm(id) {
         Swal.fire({
-            title: 'Are you sure?'
-            , text: "You won't be able to revert this!"
-            , icon: 'warning'
-            , showCancelButton: true
-            , confirmButtonColor: '#3085d6'
-            , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Yes, delete it!'
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "/request/delete/" + id
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "DELETE",
+                    url: "/recruits/" + id,
+                }).done(function(res) {
+                    if (res.status == 'success') {
+                        Swal.fire(
+                            'Delete!',
+                            'Đã xóa thành công',
+                            'success'
+                        ).then(c => {
+                            window.location.reload();
+                        })
+                    } else {
+                        Swal.fire(
+                            'Delete!',
+                            'Xóa thất bại',
+                            'error'
+                        )
+                    }
+                });
             }
         })
     }
-
 </script>
 @endsection

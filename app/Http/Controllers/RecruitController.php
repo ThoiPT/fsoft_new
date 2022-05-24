@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recruit;
+use App\Models\RecruitSkill;
 use Illuminate\Http\Request;
+use stdClass;
 
 class RecruitController extends Controller
 {
@@ -36,7 +38,23 @@ class RecruitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $add = Recruit::create($request->all());
+        foreach ($request->skills as $v) {
+            $add1 = RecruitSkill::create([
+                'recruit_id' => $add->id,
+                'skill_id' => $v,
+            ]);
+        }
+
+        if ($add && $add1) {
+            $stt_message = 'success';
+            $message = 'Thêm thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Thêm thất bại';
+        }
+
+        return redirect()->route('recruits.create')->with($stt_message, $message);
     }
 
     /**
@@ -47,7 +65,8 @@ class RecruitController extends Controller
      */
     public function show($id)
     {
-        return view('Recruit.list');
+        $detail = Recruit::find($id);
+        return view('Recruit.list', compact('detail'));
     }
 
     /**
@@ -58,7 +77,8 @@ class RecruitController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = Recruit::find($id);
+        return view('Recruit.edit', compact('detail'));
     }
 
     /**
@@ -70,7 +90,23 @@ class RecruitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Recruit::find($id)->update($request->all());
+
+        foreach ($request->skills as $v) {
+            $update1 = RecruitSkill::where('recruit_id', $id)->create([
+                'skill_id' => $v,
+            ]);
+        }
+
+        if ($update && $update1) {
+            $stt_message = 'success';
+            $message = 'Sữa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Sữa thất bại';
+        }
+
+        return redirect()->route('recruits.edit')->with($stt_message, $message);
     }
 
     /**
@@ -81,6 +117,21 @@ class RecruitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $delete = Recruit::find($id)->delete();
+        $delete = false;
+
+        if ($delete) {
+            $stt_message = 'success';
+            $message = 'Xóa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Xóa thất bại';
+        }
+
+        $res = new stdClass;
+        $res->status = $stt_message;
+        $res->message = $message;
+
+        return response()->json($res);
     }
 }
