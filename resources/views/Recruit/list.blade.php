@@ -53,9 +53,9 @@
                                 <td class="dtr-control" tabindex="0">{{ $item->id }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->title }}</td>
-                                <td>{{ $item->vacancy->name." - ".$item->level}}</td>
+                                <td>{{ $item->vacancy->name }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td></td>
+                                <td>123</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

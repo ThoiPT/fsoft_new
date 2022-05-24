@@ -13,7 +13,7 @@
                 <img src="/template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="/dashboard" class="d-block">{{ \Illuminate\Support\Facades\Auth::user()->email }}</a>
+                <a href="/dashboard" class="d-block"></a>
                 <a href="/logout" class="d-block">Logout</a>
             </div>
         </div>
