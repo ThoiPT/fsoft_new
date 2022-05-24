@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use stdClass;
 
 class VacancyController extends Controller
 {
@@ -13,7 +15,8 @@ class VacancyController extends Controller
      */
     public function index()
     {
-
+        $list = Vacancy::all();
+        return view('Vacancy.list', compact('list'));
     }
 
     /**
@@ -34,7 +37,16 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $add = Vacancy::create($request->all());
+
+        if ($add) {
+            $stt_message = 'success';
+            $message = 'Vacancy Add Success';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Vacancy Add Failed';
+        }
+        return redirect()->route('vacancies.index')->with($stt_message, $message);
     }
 
     /**
@@ -45,7 +57,8 @@ class VacancyController extends Controller
      */
     public function show($id)
     {
-        return view('Vacancy.list');
+        $detail = Vacancy::find($id);
+        return view('Vacancy.list', compact('detail'));
     }
 
     /**
@@ -56,7 +69,9 @@ class VacancyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = Vacancy::find($id);
+        $list = Vacancy::all();
+        return view('Vacancy.update', compact('detail','list'));
     }
 
     /**
@@ -68,7 +83,17 @@ class VacancyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Vacancy::find($id)->update($request->all());
+
+        if ($update) {
+            $stt_message = 'success';
+            $message = 'Update Success';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Update Failed';
+        }
+
+        return redirect()->route('vacancies.index')->with($stt_message, $message);
     }
 
     /**
@@ -79,6 +104,20 @@ class VacancyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Vacancy::find($id)->delete();
+
+        if ($delete) {
+            $stt_message = 'success';
+            $message = 'Xóa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Xóa thất bại';
+        }
+
+        $res = new stdClass;
+        $res->status = $stt_message;
+        $res->message = $message;
+
+        return response()->json($res);
     }
 }

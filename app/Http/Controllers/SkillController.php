@@ -41,10 +41,10 @@ class SkillController extends Controller
 
         if ($add) {
             $stt_message = 'success';
-            $message = 'Sữa thành công';
+            $message = 'Thêm thành công';
         } else {
             $stt_message = 'fail';
-            $message = 'Sữa thất bại';
+            $message = 'Thêm thất bại';
         }
 
         return redirect()->route('skills.index')->with($stt_message, $message);
@@ -71,7 +71,8 @@ class SkillController extends Controller
     public function edit($id)
     {
         $detail = Skill::find($id);
-        return view('Skill.list', compact('detail'));
+        $list = Skill::all();
+        return view('Skill.update', compact('detail','list'));
     }
 
     /**
@@ -87,13 +88,13 @@ class SkillController extends Controller
 
         if ($update) {
             $stt_message = 'success';
-            $message = 'Sữa thành công';
+            $message = 'Update Success';
         } else {
             $stt_message = 'fail';
-            $message = 'Sữa thất bại';
+            $message = 'Update Failed';
         }
 
-        return redirect()->route('recruits.edit')->with($stt_message, $message);
+        return redirect()->route('skills.index')->with($stt_message, $message);
     }
 
     /**

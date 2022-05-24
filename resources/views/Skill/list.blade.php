@@ -27,19 +27,25 @@
                             </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($list as $item)
                                 <tr class="odd">
-                                    <td class="dtr-control" tabindex="0"></td>
-
+                                    <td class="dtr-control" tabindex="0">{{ $item -> id }}</td>
+                                    @if($item -> status == 1)
                                         <td>
                                             <small class="badge badge-success">
-                                                <i class="fa flag-icon-er"></i>Open
+                                                <i class="fa flag-icon-er"></i>ON
                                             </small>
                                         </td>
-
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    @else
+                                        <td>
+                                            <small class="badge badge-danger">
+                                                <i class="fa flag-icon-er"></i>OFF
+                                            </small>
+                                        </td>
+                                    @endif
+                                    <td>{{ $item -> name }}</td>
+                                    <td>{{ $item -> created_at }}</td>
+                                    <td>{{ $item -> updated_at }}</td>
                                     <td>
                                         <!-- Example single danger button -->
                                         <div class="btn-group">
@@ -47,13 +53,14 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/skill/create">New</a>
-                                                {{-- <a class="dropdown-item" href="/skill/update/{{$item -> id}}">Update</a> --}}
-                                                {{-- <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a> --}}
+                                                <a class="dropdown-item" href="/skills/create">New</a>
+                                                <a class="dropdown-item" href="/skills/{{ $item->id }}/edit">Edit</a>
+                                                <a class="dropdown-item" href="javascript:;" onclick=deleteConfirm({{ $item->id }})>Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
@@ -74,22 +81,46 @@
         <!-- /.card-body -->
     </div>
     <script>
-        function deleteConfirm(id)
-        {
+        function deleteConfirm(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?'
+                , text: "You won't be able to revert this!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#3085d6'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/skill/delete/" + id
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: "DELETE"
+                        , url: "/skills/" + id
+                        , }).done(function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Success'
+                                , 'success'
+                            ).then(c => {
+                                window.location.reload();
+                            })
+                        } else {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Failed'
+                                , 'error'
+                            )
+                        }
+                    });
                 }
             })
         }
+
     </script>
 @endsection
 

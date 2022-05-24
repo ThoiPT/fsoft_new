@@ -9,7 +9,7 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form id="frmSkill" method="POST" novalidate="novalidate">
+        <form id="frmSkill" action="{{ route('skills.store') }}" method="POST" novalidate="novalidate">
             @csrf
             <div class="card-body">
                 <div class="form-group">
@@ -32,18 +32,6 @@
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
-                {{-- @if(\Illuminate\Support\Facades\Session::has('mes'))
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h5><i class="icon fas fa-check"></i>
-                            {{ \Illuminate\Support\Facades\Session::get('mes') }}
-                        </h5>
-                        Continue add or
-                        <a style="font-weight: bold; color: floralwhite" href="{{ route('get.skill.list') }}">
-                            Go to List of Skill
-                        </a>
-                    </div>
-                @endif --}}
             </div>
         </form>
     </div>

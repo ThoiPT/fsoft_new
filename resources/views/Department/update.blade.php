@@ -1,23 +1,24 @@
 @extends('home')
 @section('content')
-    <div class="col-md-6" style="max-width: 100%">
+    <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Update Department</h3>
+                <h3 class="card-title">Update detail</h3>
             </div>
-            <form method="POST">
+            <form method="POST" action="/departments/{{$detail->id}}">
+                @method('PUT')
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Department Name</label>
-                        <input type="text" class="form-control" name="name" id="exampleInputSkill" value="{{ $department -> name }}">
+                        <input type="text" class="form-control" name="name" id="exampleInputSkill" value="{{ $detail -> name }}">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
                             Description
                         </label>
-                        <textarea name="description" id="editor">{{ $department -> description }}</textarea>
+                        <textarea name="description" id="editor">{{ $detail -> description }}</textarea>
                     </div>
                 </div>
                 <!-- /.card-body -->

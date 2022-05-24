@@ -26,14 +26,13 @@
                             </tr>
                             </thead>
                             <tbody>
-
-
+                                @foreach($list as $item)
                                 <tr class="odd">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $item -> id }}</td>
+                                    <td>{{ $item -> name }}</td>
+                                    <td>{!! $item -> description !!}</td>
+                                    <td>{{ $item -> created_at }}</td>
+                                    <td>{{ $item -> updated_at }}</td>
                                     <td>
                                         <!-- Example single danger button -->
                                         <div class="btn-group">
@@ -41,13 +40,14 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/skill/create">New</a>
-                                                {{-- <a class="dropdown-item" href="/skill/update/{{$item -> id}}">Update</a> --}}
-                                                {{-- <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a> --}}
+                                                <a class="dropdown-item" href="/departments/create">New</a>
+                                                 <a class="dropdown-item" href="/departments/{{$item -> id}}/edit">Edit</a>
+                                                 <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
@@ -67,19 +67,42 @@
         <!-- /.card-body -->
     </div>
     <script>
-        function deleteConfirm(id)
-        {
+        function deleteConfirm(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?'
+                , text: "You won't be able to revert this!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#3085d6'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/department/delete/" + id
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: "DELETE"
+                        , url: "/departments/" + id
+                        , }).done(function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Success'
+                                , 'success'
+                            ).then(c => {
+                                window.location.reload();
+                            })
+                        } else {
+                            Swal.fire(
+                                'Delete!'
+                                , 'Delete Failed'
+                                , 'error'
+                            )
+                        }
+                    });
                 }
             })
         }

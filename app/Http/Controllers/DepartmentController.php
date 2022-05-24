@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
+use stdClass;
 
 class DepartmentController extends Controller
 {
@@ -13,7 +15,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $list = Department::all();
+        return view('Department.list', compact('list'));
     }
 
     /**
@@ -34,7 +37,17 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $add = Department::create($request->all());
+
+        if ($add) {
+            $stt_message = 'success';
+            $message = 'Thêm thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Thêm thất bại';
+        }
+
+        return redirect()->route('departments.index')->with($stt_message, $message);
     }
 
     /**
@@ -45,7 +58,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        return view('Department.list');
+        $detail = Department::find($id);
+        return view('Skill.list', compact('detail'));
     }
 
     /**
@@ -56,7 +70,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = Department::find($id);
+        $list = Department::all();
+        return view('Department.update', compact('detail','list'));
     }
 
     /**
@@ -68,7 +84,17 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Department::find($id)->update($request->all());
+
+        if ($update) {
+            $stt_message = 'success';
+            $message = 'Update Success';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Update Failed';
+        }
+
+        return redirect()->route('departments.index')->with($stt_message, $message);
     }
 
     /**
@@ -79,6 +105,20 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Department::find($id)->delete();
+
+        if ($delete) {
+            $stt_message = 'success';
+            $message = 'Xóa thành công';
+        } else {
+            $stt_message = 'fail';
+            $message = 'Xóa thất bại';
+        }
+
+        $res = new stdClass;
+        $res->status = $stt_message;
+        $res->message = $message;
+
+        return response()->json($res);
     }
 }

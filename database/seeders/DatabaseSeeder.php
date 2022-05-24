@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-
         $arr_skill = ['CSS', 'HTML', 'JS', 'PHP', 'NodeJs', 'Laravel', 'Python', 'Java', 'C', 'C++', 'C#', 'Ruby'];
         foreach($arr_skill as $v){
             Skill::factory()->create([
@@ -41,18 +40,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
-        $arr_vacancy = ['Fron End', 'HTML', 'JS', 'PHP', 'NodeJs', 'Laravel', 'Python', 'Java', 'C', 'C++', 'C#', 'Ruby'];
+        $arr_vacancy = ['Front End', 'Back End', 'Mobile', 'DevOPS', 'Tester', 'Project Manager'];
         foreach($arr_vacancy as $v){
             Vacancy::factory()->create([
                 'name' => $v
             ]);
         }
-        Vacancy::factory(10)->create();
-
         Recruit::factory(10)->create();
         RecruitSkill::factory(10)->create();
         CV::factory(10)->create();
-
-
     }
 }

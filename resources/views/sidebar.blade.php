@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/vacancies/list" class="nav-link">
+                            <a href="/vacancies" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Vacancy List</p>
                             </a>
@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/skills/list" class="nav-link">
+                            <a href="/skills" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Skill List</p>
                             </a>
@@ -146,7 +146,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/departments/list" class="nav-link">
+                            <a href="/departments" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Department List</p>
                             </a>
@@ -170,7 +170,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/users/list" class="nav-link">
+                            <a href="/users" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Account List</p>
                             </a>
