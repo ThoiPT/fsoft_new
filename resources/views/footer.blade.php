@@ -49,6 +49,10 @@
 <script src="/template/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/template/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+
+
 <script>
     ClassicEditor
         .create( document.querySelector( '#editor' ) )

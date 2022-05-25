@@ -8,7 +8,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form action="/cv/{{$detail -> id}}" method="POST">
+                <form action="/cv/{{$detail -> id}}" method="POST" enctype="multipart/form-data" >
                     @method('PUT')
                     @csrf
                     <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $list = User::all();
+        $list = User::all()->where('role', '<>', UserRole::Admin);
+        
         return view("Account.list",compact('list'));
     }
 
