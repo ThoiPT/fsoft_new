@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use stdClass;
+use function React\Promise\all;
 
 class UserController extends Controller
 {
@@ -18,9 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $list = User::all()->where('role', '<>', UserRole::Admin);
-        
-        return view("Account.list",compact('list'));
+        $list_admin = User::all()->where('role', '<>', UserRole::Employee);
+        $list_user = User::all()->where('role', '<>', UserRole::Admin);
+
+        return view("Account.list",compact('list_admin','list_user'));
     }
 
     /**
@@ -52,7 +54,6 @@ class UserController extends Controller
             $stt_message = 'fail';
             $message = 'Account Register Failed';
         }
-
         return redirect()->route('users.index')->with($stt_message, $message);
     }
 

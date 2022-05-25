@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('gender');
             $table->string('address');
-            $table->string('file')->default('test_Cv.pdf');
+            $table->string('file');
             $table->unsignedBigInteger('recruit_id');
             $table->string('status')->default(Status::New);
             $table->timestamps();
