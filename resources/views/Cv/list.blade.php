@@ -80,10 +80,11 @@
     <!-- /.card-body -->
 </div>
 
+</script>
 <script>
-    // $(document).ready(function() {
+    $(document).ready( function () {
         $('#table-cv').DataTable();
-    // });
+    } );
 </script>
 
 <script>

@@ -15,7 +15,7 @@
         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                    <table id="table-recruit" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                         <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
@@ -124,6 +124,10 @@
             }
         })
     }
-
+</script>
+<script>
+    $(document).ready( function () {
+        $('#table-recruit').DataTable();
+    } );
 </script>
 @endsection
