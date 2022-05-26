@@ -62,7 +62,7 @@
                                         <small class="badge badge-danger">Working</small>
                                     </td>
                                 @endif
-                                <td> {{ $item -> recruit -> department -> name }}</td>
+                                <td> {{ $item -> recruit -> department -> name ?? 'None' }}</td>
                                 <td>{{ $item -> recruit -> title ?? 'None' }}</td>
                                 <td>{{ $item -> recruit -> user -> name ?? 'None' }}</td>
                                 <td>{{ $item -> phone }}</td>
