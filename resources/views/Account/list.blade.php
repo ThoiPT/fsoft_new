@@ -32,7 +32,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                                 @foreach($list_user as $item)
                                 <tr class="odd">
                                     <td>{{ $item -> id }}</td>

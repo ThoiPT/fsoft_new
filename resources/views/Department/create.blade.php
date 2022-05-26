@@ -1,10 +1,16 @@
 @extends('home')
 @section('content')
+    <style>
+        b{
+            color: red;
+            font-size: 12px;
+        }
+    </style>
     <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">New Department</h3>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px">New Department</a>
             </div>
             <!-- form start -->
 
@@ -12,7 +18,8 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Department Name</label>
+                        <i class="fa-solid fa-users-cog"></i>
+                        <label for="exampleInputEmail1"> Department Name <b>(Required)</b></label>
                         <input type="text" class="form-control" name="name" id="exampleInputSkill" placeholder="Enter name">
 
                     </div>

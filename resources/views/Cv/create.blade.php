@@ -1,17 +1,25 @@
 @extends('home')
 @section('content')
+    <style>
+        b{
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+
     <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements disabled -->
         <div class="card card-warning">
             <div class="card-header">
-                <h3 class="card-title">ADD Curriculum Vitae</h3>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px; color: white">Add Curriculum Vitae</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <form action="{{ route('cv.store') }}" method="POST" enctype="multipart/form-data" id="frmCV">
                     @csrf
                     <div class="form-group" data-select2-id="74">
-                        <label>Add to</label>
+                        <i class="fa-solid fa-location-arrow"></i>
+                        <label>Add to <b>(Required)</b></label>
                         <select name="recruit_id" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
                             @foreach($recruit_list as $item)
                                 <option selected="selected" value="{{ $item -> id }}">{{ $item -> title }}</option>
@@ -20,27 +28,31 @@
                     </div>
 
                     <div class="form-group">
+                        <i class="fa-solid fa-user"></i>
                         <label class="col-form-label" for="inputSuccess">
-                            Full Name
+                            Full Name <b>(Required)</b>
                         </label>
                         <input type="text" class="form-control success" name="name" id="inputSuccess" placeholder="Full Name">
                     </div>
 
                     <div class="form-group">
+                        <i class="fa-solid fa-mobile-screen"></i>
                         <label class="col-form-label" for="inputSuccess">
-                            Phone Number
+                            Phone Number <b>(Required)</b>
                         </label>
                         <input type="text" class="form-control success" name="phone" minlength="10" maxlength="12" pattern="[0][0-9]{9}" id="inputSuccess" placeholder="Ex: 0399769450">
                     </div>
 
                     <div class="form-group">
+                        <i class="fa-solid fa-at"></i>
                         <label class="col-form-label" for="inputSuccess">
-                            Email
+                            Email <b>(Required)</b>
                         </label>
                         <input type="email" class="form-control success" name="email" id="inputSuccess" placeholder="abcd@gmail.com">
                     </div>
 
                     <div class="col-sm-6">
+                        <i class="fa-solid fa-mars-and-venus"></i>
                         <label class="col-form-label" for="inputSuccess">
                             Gender
                         </label>
@@ -61,14 +73,16 @@
                     </div>
 
                     <div class="form-group">
+                        <i class="fa-solid fa-location-dot"></i>
                         <label class="col-form-label" for="inputSuccess">
-                            Address
+                            Address <b>(Required)</b>
                         </label>
                         <input type="text" class="form-control success" name="address" id="inputSuccess" placeholder="Address"></div>
 
                     <div class="form-group">
+                        <i class="fa-solid fa-file-circle-check"></i>
                         <label class="col-form-label" for="inputSuccess">
-                            File
+                            File <b>(Required)</b>
                         </label>
                         <input type="file" class="form-control success" name="file" id="inputSuccess" placeholder="File">
                     </div>

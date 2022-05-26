@@ -16,7 +16,9 @@ final class Status extends Enum
 
     const New = '2';
     const Interview = '3';
-    const Offer = '4';
-    const Onboard = '5';
-    const Reject = '6';
+    const SendResult = '4';
+    const Offer = '5';
+    const Onboard = '6';
+    const Reject = '7';
+    const working = '8';
 }

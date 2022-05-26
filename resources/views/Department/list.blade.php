@@ -7,7 +7,8 @@
     </style>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">View Report</h3>
+            <a class="btn btn-danger" style="font-weight: bold">List of Department</a>
+            <a href="/departments/create" class="btn btn-outline-danger" style="font-weight: bold; float: right">New Department</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -40,7 +41,6 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/departments/create">New</a>
                                                  <a class="dropdown-item" href="/departments/{{$item -> id}}/edit">Edit</a>
                                                  <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a>
                                             </div>

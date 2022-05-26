@@ -265,6 +265,39 @@
                 file: {
                     required: true,
                 },
+                email: {
+                  required: true,
+                  email: true
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        $('#frmCV_Edit').validate({
+            rules: {
+                name:{
+                    required: true,
+                },
+                phone:{
+                    required: true,
+                },
+                address: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {
@@ -310,6 +343,26 @@
                 password:{
                     required: true
                 }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        $('#frmVacancy').validate({
+            rules: {
+                name:{
+                    required: true,
+
+                },
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {

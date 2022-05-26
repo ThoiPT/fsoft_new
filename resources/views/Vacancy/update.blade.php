@@ -5,7 +5,7 @@
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Detail Name: {{$detail -> name}}</h3>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px">Edit Vacancy Name: {{ $detail->name }}</a>
             </div>
             <!-- form start -->
             <form action="/vacancies/{{$detail->id}}" method="POST">

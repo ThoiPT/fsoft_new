@@ -4,11 +4,10 @@
     <!-- jquery validation -->
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">New Skill</h3>
+            <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px">New Skill</a>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-
         <form id="frmSkill" action="{{ route('skills.store') }}" method="POST" novalidate="novalidate">
             @csrf
             <div class="card-body">

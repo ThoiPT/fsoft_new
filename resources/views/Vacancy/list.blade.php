@@ -8,7 +8,8 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">List of Vacancy</h3>
+            <a class="btn btn-danger" style="font-weight: bold">List of Vacancy </a>
+            <a href="/vacancies/create" class="btn btn-outline-danger" style="font-weight: bold; float: right">New Vacancy</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -41,9 +42,8 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/vacancies/create">New</a>
                                                 <a class="dropdown-item" href="/vacancies/{{$item->id}}/edit">Edit</a>
-                                                 <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a>
+                                                <a class="dropdown-item" onclick="deleteConfirm({{$item -> id}})">Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -61,7 +61,6 @@
                             </tr>
                             </tfoot>
                         </table>
-
                     </div>
                 </div>
             </div>

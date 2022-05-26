@@ -50,12 +50,10 @@
                                             <small class="badge badge-info">Available: {{$item->numRecruit}} </small>
                                         </td>
                                     @endif
-                                    <td>{{ $item -> department -> name ?? 'None'}}</td>
+                                    <td> {{ $item -> department -> name ?? 'None'}}</td>
                                     <td>{{ $item -> user -> email ?? 'None' }}</td>
-
                                 </tr>
                                 @endforeach
-
                             </tbody>
                             <tfoot>
                                 <tr>

@@ -7,7 +7,8 @@
 </style>
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">List of Curriculum Vitae</h3>
+        <a class="btn btn-danger" style="font-weight: bold">List of Curriculum Vitae </a>
+        <a href= "{{ route('cv.create') }}" class="btn btn-outline-danger" style="font-weight: bold; float: right">New CV</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -19,6 +20,7 @@
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">#</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Status</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Department</th>
                                 <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Title</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Full Name</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Phone Number</th>
@@ -32,29 +34,42 @@
                             <tr class="odd" id="cv-tr-{{ $item->id }}">
                                 <td class="dtr-control" tabindex="0">{{ $item -> id }}</td>
                                 @if($item -> status == \App\Enums\Status::New)
-                                <td>
-                                    <small class="badge badge-success">New</small>
-                                </td>
+                                    <td>
+                                        <small class="badge badge-success">New</small>
+                                    </td>
                                 @elseif($item -> status == \App\Enums\Status::Interview)
-                                <td>
-                                    <small class="badge badge-warning">Interview</small>
-                                </td>
+                                    <td>
+                                        <small class="badge badge-warning">Interview</small>
+                                    </td>
+                                @elseif($item -> status == \App\Enums\Status::SendResult)
+                                    <td>
+                                        <small class="badge badge-info">Send Result</small>
+                                    </td>
                                 @elseif($item -> status == \App\Enums\Status::Offer)
-                                <td>
-                                    <small class="badge badge-info">Offer</small>
-                                </td>
+                                    <td>
+                                        <small class="badge badge-primary">Offer</small>
+                                    </td>
+                                @elseif($item -> status == \App\Enums\Status::Reject)
+                                    <td>
+                                        <small class="badge badge-secondary">Reject</small>
+                                    </td>
+                                @elseif($item -> status == \App\Enums\Status::Onboard)
+                                    <td>
+                                        <small class="badge badge-info">Onboard</small>
+                                    </td>
                                 @else
-                                <td>
-                                    <small class="badge badge-danger">Onboard</small>
-                                </td>
+                                    <td>
+                                        <small class="badge badge-danger">Working</small>
+                                    </td>
                                 @endif
+                                <td> {{ $item -> recruit -> department -> name }}</td>
                                 <td>{{ $item -> recruit -> title ?? 'None' }}</td>
                                 <td>{{ $item -> recruit -> user -> name ?? 'None' }}</td>
                                 <td>{{ $item -> phone }}</td>
                                 <td>{{ $item -> address }}</td>
                                 <td>
                                     <a href={{ asset('storage/'.$item->file) }}>File CV</a>
-                                    <!-- <iframe src={{ asset('storage/'.$item->file) }} class="embed-responsive-item"></iframe> -->
+{{--                                    <iframe src={{ asset('storage/'.$item->file) }} class="embed-responsive-item"></iframe>--}}
                                 </td>
                                 <td>
                                     <!-- Example single danger button -->
@@ -63,7 +78,6 @@
                                             Action
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="/cv/create">New</a>
                                             <a class="dropdown-item" href="/cv/{{$item -> id}}/edit">Edit</a>
                                             <a class="dropdown-item" href="javascript:;" onclick="deleteConfirm({{$item -> id}})">Delete</a>
                                         </div>
@@ -72,6 +86,19 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th rowspan="1" colspan="1">#</th>
+                            <th rowspan="1" colspan="1">Status</th>
+                            <th rowspan="1" colspan="1">Department</th>
+                            <th rowspan="1" colspan="1">Title</th>
+                            <th rowspan="1" colspan="1">Full Name</th>
+                            <th rowspan="1" colspan="1">Phone Number</th>
+                            <th rowspan="1" colspan="1">Address</th>
+                            <th rowspan="1" colspan="1">File CV</th>
+                            <th rowspan="1" colspan="1">Action</th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -80,12 +107,33 @@
     <!-- /.card-body -->
 </div>
 
-</script>
 <script>
-    $(document).ready( function () {
-        $('#table-cv').DataTable();
-    } );
+    $(document).ready(function () {
+        $('#table-cv').DataTable({
+            initComplete: function () {
+                this.api()
+                    .columns([1,2,3,4,5,6])
+                    .every(function () {
+                        var column = this;
+                        var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+                        column.data().unique().sort().each( function ( d, j ) {
+                            if(column.search() === '^'+d+'$'){
+                                select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+                            } else {
+                                select.append( '<option>'+d+'</option>' )
+                            }
+                        } );
+                    });
+            },
+        });
+    });
 </script>
+
 
 <script>
     function deleteConfirm(id) {
