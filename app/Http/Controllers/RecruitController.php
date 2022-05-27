@@ -7,6 +7,7 @@ use App\Models\Recruit;
 use App\Models\RecruitSkill;
 use App\Models\Skill;
 use App\Models\Vacancy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -32,8 +33,11 @@ class RecruitController extends Controller
     {
         $vacancy_list =  Vacancy::all();
         $skill_list = Skill::all();
-
-        return view('Recruit.create', compact('vacancy_list', 'skill_list'));
+        // Lấy ngày giờ hiện tại
+        $timeCurrent = Carbon::now('Asia/Ho_Chi_Minh');
+        // Format lại chỉ lấy ngày tháng năm, truyền qua view để ràng buộc Open, Close
+        $timeFormat = $timeCurrent -> toDateString();
+        return view('Recruit.create', compact('vacancy_list', 'skill_list','timeFormat'));
     }
 
     /**
@@ -54,13 +58,13 @@ class RecruitController extends Controller
 
         if ($add && $add1) {
             $stt_message = 'success';
-            $message = 'Thêm thành công';
+            $message = 'Recruit Add Success';
         } else {
             $stt_message = 'fail';
-            $message = 'Thêm thất bại';
+            $message = 'Recruit Add Failed';
         }
 
-        return redirect()->route('recruits.create')->with($stt_message, $message);
+        return redirect()->route('recruits.index')->with($stt_message, $message);
     }
 
     /**
@@ -118,10 +122,10 @@ class RecruitController extends Controller
 
         if ($update && $update1) {
             $stt_message = 'success';
-            $message = 'Sữa thành công';
+            $message = 'Recruit Update Success';
         } else {
             $stt_message = 'fail';
-            $message = 'Sữa thất bại';
+            $message = 'Recruit Update Failed ';
         }
 
         return redirect()->route('recruits.index')->with($stt_message, $message);

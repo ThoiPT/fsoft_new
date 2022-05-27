@@ -6,7 +6,6 @@
             font-size: 12px;
         }
     </style>
-
     <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements disabled -->
         <div class="card card-warning">

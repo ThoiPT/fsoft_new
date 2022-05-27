@@ -1,18 +1,26 @@
 @extends('home')
 @section('content')
+    <style>
+        b{
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+
     <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Update Skill: {{$detail -> name}}</h3>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px">Edit Account: {{ $detail->name }}</a>
             </div>
             <!-- form start -->
-            <form action="/skills/{{$detail -> id}}" method="POST">
+            <form action="/skills/{{$detail -> id}}" method="POST" id="frmSkill">
                 @method('PUT')
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Skill Name</label>
+                        <i class="fa-solid fa-spell-check"></i>
+                        <label for="exampleInputEmail1"> Skill Name<b> (Not Empty)</b></label>
                         <input type="text" class="form-control" name="name" id="exampleInputSkill" value="{{ $detail -> name }}">
                     </div>
 

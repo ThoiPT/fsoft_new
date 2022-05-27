@@ -93,9 +93,6 @@ class CvController extends Controller
             $stt_message = 'fail';
             $message = 'Thêm thất bại';
         }
-
-
-
         return redirect()->route('cv.index')->with($stt_message, $message);
     }
 
@@ -143,7 +140,7 @@ class CvController extends Controller
         if ($update) {
 
             if ($request->hasFile('file')) {
-                
+
                 $file_temp = $request->file('file');
                 $filename = Storage::disk('public')->put('cv', $file_temp);
 

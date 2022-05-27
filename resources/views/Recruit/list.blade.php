@@ -8,7 +8,8 @@
 </style>
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">List of Request</h3>
+        <a class="btn btn-danger" style="font-weight: bold">List of Recruit </a>
+        <a href="/recruits/create" class="btn btn-outline-danger" style="font-weight: bold; float: right">New Recruit</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -31,19 +32,21 @@
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                                     Vacancy
-
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
+                                    Level
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
+                                    Experience
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                                     Description
-
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                                    Email
-
+                                    Email Log
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                                     Action
-
                                 </th>
                             </tr>
                         </thead>
@@ -51,17 +54,21 @@
                             @foreach ( $list as $item )
                             <tr class="odd">
                                 <td class="dtr-control" tabindex="0">{{ $item->id }}</td>
-                                <td class="text-center">
-                                    @if($item->status === App\Enums\Status::On)
-                                    <i class="fs-2 fa fa-toggle-on"></i>
-                                    @else
-                                    <i class="fs-2 fa fa-toggle-off"></i>
-                                    @endif
-                                </td>
+                                @if($item->status === App\Enums\Status::On)
+                                    <td>
+                                        <small class="badge badge-success">Recruit Open</small>
+                                    </td>
+                                @else
+                                    <td>
+                                        <small class="badge badge-danger">Recruit Close</small>
+                                    </td>
+                                @endif
                                 <td>{{ $item->title }}</td>
-                                <td>{{ $item->vacancy->name." - ". $item->level }}</td>
-                                <td>{{ $item->description }}</td>
-                                <td>123</td>
+                                <td>{{ $item->vacancy->name}}</td>
+                                <td>{{ $item->level}}</td>
+                                <td>{{ $item->exp}}</td>
+                                <td>{!! $item->description !!}</td>
+                                <td>{{ $item -> user -> email ?? 'None' }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,8 +82,20 @@
                                 </td>
                             </tr>
                             @endforeach
-
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th rowspan="1" colspan="1">#</th>
+                            <th rowspan="1" colspan="1">Status</th>
+                            <th rowspan="1" colspan="1">Title</th>
+                            <th rowspan="1" colspan="1">Vacancy</th>
+                            <th rowspan="1" colspan="1">Level</th>
+                            <th rowspan="1" colspan="1">Experience</th>
+                            <th rowspan="1" colspan="1">Description</th>
+                            <th rowspan="1" colspan="1">Email Log</th>
+                            <th rowspan="1" colspan="1">Action</th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -126,8 +145,30 @@
     }
 </script>
 <script>
-    $(document).ready( function () {
-        $('#table-recruit').DataTable();
-    } );
+    $(document).ready(function () {
+        $('#table-recruit').DataTable({
+            initComplete: function () {
+                this.api()
+                    .columns([1,2,3,4,5,7])
+                    .every(function () {
+                        var column = this;
+                        var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+                        column.data().unique().sort().each( function ( d, j ) {
+                            if(column.search() === '^'+d+'$'){
+                                select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+                            } else {
+                                select.append( '<option>'+d+'</option>' )
+                            }
+                        } );
+                    });
+            },
+        });
+    });
 </script>
 @endsection
+

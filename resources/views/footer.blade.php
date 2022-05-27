@@ -55,13 +55,16 @@
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-            console.log( editor );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+    var allEditors = document.querySelector('#editor');
+    ClassicEditor.create(allEditors);
+    $("#frmRequest").submit(function(e) {
+        var content = $('#editor').val();
+        html = $(content).text();
+        if ($.trim(html) == '') {
+            alert("Recruit description cannot be blank");
+            e.preventDefault();
+        }
+    });
 </script>
 
 <!-- Data Tables -->
@@ -213,7 +216,7 @@
                 title:{
                     required: true,
                 },
-                experience:{
+                exp:{
                     required: true,
                 },
                 level: {
@@ -222,10 +225,50 @@
                 numRecruit: {
                     required: true,
                 },
-                open: {
+                open_at: {
                     required: true,
                 },
-                close: {
+                close_at: {
+                    required: true,
+                },
+                status: {
+                    required: true,
+                },
+                skill_id: {
+                    required: true,
+                },
+                description: {
+                    required: true,
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        $('#frmRequest_Edit').validate({
+            rules: {
+                title:{
+                    required: true,
+                },
+                exp:{
+                    required: true,
+                },
+                level: {
+                    required: true,
+                },
+                numRecruit: {
+                    required: true,
+                },
+                close_at: {
                     required: true,
                 },
                 status: {

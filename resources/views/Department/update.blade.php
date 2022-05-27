@@ -1,17 +1,24 @@
 @extends('home')
 @section('content')
+    <style>
+        b{
+            color: red;
+            font-size: 12px;
+        }
+    </style>
     <div class="col-md-12" style="max-width: 100%">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Update detail</h3>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px">Edit Department: {{ $detail->name }}</a>
             </div>
-            <form method="POST" action="/departments/{{$detail->id}}">
+            <form method="POST" action="/departments/{{$detail->id}}" id="frmDepartment">
                 @method('PUT')
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Department Name</label>
+                        <i class="fa-solid fa-users-cog"></i>
+                        <label for="exampleInputEmail1">Department Name <b> (Not Empty)</b></label>
                         <input type="text" class="form-control" name="name" id="exampleInputSkill" value="{{ $detail -> name }}">
                     </div>
                     <div class="form-group">

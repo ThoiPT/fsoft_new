@@ -1,5 +1,11 @@
 @extends('home')
 @section('content')
+    <style>
+        b{
+            color: red;
+            font-size: 12px;
+        }
+    </style>
 <div class="col-md-12">
     <!-- jquery validation -->
     <div class="card card-primary">
@@ -12,7 +18,8 @@
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Skill Name</label>
+                    <i class="fa-solid fa-spell-check"></i>
+                    <label for="exampleInputEmail1">Skill Name <b> (Required)</b></label>
                     <input name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
                 </div>
                     <div class="col-sm-6">
