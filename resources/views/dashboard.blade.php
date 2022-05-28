@@ -5,10 +5,16 @@
         #example1_paginate{
             display: none;
         }
+        #test {
+            pointer-events: none;
+            font-size: 23px;
+            font-weight: bold;
+            color: white;
+        }
     </style>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">View Report</h3>
+            <a id="test" class="btn btn-warning">All Recruit (Open)</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -19,7 +25,9 @@
                             <thead>
                                 <tr>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">ID</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Status</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                                        Status
+                                    </th>
                                     <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Recruit Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Vacancy Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Close Date</th>
@@ -78,9 +86,30 @@
         <!-- /.card-body -->
     </div>
     <script>
-        $(document).ready( function () {
-            $('#table-dashboard').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#table-dashboard').DataTable({
+                initComplete: function () {
+                    this.api()
+                        .columns([2,3,4,6,7])
+                        .every(function () {
+                            var column = this;
+                            var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                });
+                            column.data().unique().sort().each( function ( d, j ) {
+                                if(column.search() === '^'+d+'$'){
+                                    select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+                                } else {
+                                    select.append( '<option>'+d+'</option>' )
+                                }
+                            } );
+                        });
+                },
+            });
+        });
     </script>
 @endsection
 

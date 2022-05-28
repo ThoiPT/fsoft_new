@@ -24,7 +24,6 @@
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                                     Status
-
                                 </th>
                                 <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">
                                     Title
@@ -44,6 +43,9 @@
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                                     Email Log
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                                    Updated At
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                                     Action
@@ -69,6 +71,7 @@
                                 <td>{{ $item->exp}}</td>
                                 <td>{!! $item->description !!}</td>
                                 <td>{{ $item -> user -> email ?? 'None' }}</td>
+                                <td>{{ $item -> updated_at}}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -93,6 +96,7 @@
                             <th rowspan="1" colspan="1">Experience</th>
                             <th rowspan="1" colspan="1">Description</th>
                             <th rowspan="1" colspan="1">Email Log</th>
+                            <th rowspan="1" colspan="1">Update At</th>
                             <th rowspan="1" colspan="1">Action</th>
                         </tr>
                         </tfoot>

@@ -44,7 +44,7 @@
                         <div class="select2-purple" data-select2-id="119">
                             <select required name="skills[]" class="select2 select2-hidden-accessible" multiple data-placeholder="Select other skill" data-dropdown-css-class="select2-purple" style="width: 100%;" aria-hidden="true">
                                 @foreach ($skill_list as $v)
-                                <option value="{{ $v->id }}">{{ $v->name }}</option>
+                                    <option value="{{ $v->id }}">{{ $v->name }}</option>
                                 @endforeach
                             </select>
                         </div>

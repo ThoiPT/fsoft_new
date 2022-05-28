@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('recruits.index');
+    return redirect()->route('dashboard.index');
 });
 
 Route::resource('recruits', RecruitController::class)->middleware(['auth']);
@@ -35,7 +35,6 @@ Route::resource('vacancies', VacancyController::class)->middleware(['auth']);
 Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['auth']);
 
 //Other Controller
-
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');

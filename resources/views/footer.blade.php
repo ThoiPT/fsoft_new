@@ -53,6 +53,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
 
 
+<!-- CHECK VALIDATE DESCRIPTION FORM NEW RECRUIT-->
 <script>
     ClassicEditor
     var allEditors = document.querySelector('#editor');
@@ -66,6 +67,23 @@
         }
     });
 </script>
+
+<!-- CHECK VALIDATE DESCRIPTION FORM EDIT RECRUIT-->
+<script>
+    ClassicEditor
+    var allEditors = document.querySelector('#editor_frmEdit');
+    ClassicEditor.create(allEditors);
+    $("#frmRequest_Edit").submit(function(e) {
+        var content = $('#editor_frmEdit').val();
+        html = $(content).text();
+        if ($.trim(html) == '') {
+            alert("Recruit description cannot be blank");
+            e.preventDefault();
+        }
+    });
+</script>
+
+<!-- CHECK VALIDATE DESCRIPTION FORM EDIT RECRUIT-->
 
 <!-- Data Tables -->
 <script>

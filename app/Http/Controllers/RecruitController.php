@@ -113,7 +113,7 @@ class RecruitController extends Controller
 
         $del = RecruitSkill::where('recruit_id', $id)->delete();
 
-        foreach ($request->skills as $v) { //id of table skills
+        foreach ($request-> skills as $v) { //id of table skills
             $update1 = RecruitSkill::where('recruit_id', $id)->create([
                 'recruit_id' => $id,
                 'skill_id' => $v,

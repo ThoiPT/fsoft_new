@@ -11,10 +11,11 @@
     <div class="col-md-6" style="max-width: 100%">
         <div class="card card-warning">
             <div class="card-header">
-                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px; color: white">Edit Recruit: {{ $detail->title }}</a>            </div>
+                <a class="btn btn-group-toggle" style="font-weight: bold; font-size: 23px; color: white">Edit Recruit: {{ $detail->title }}</a>
+            </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form action="/recruits/{{ $detail->id }}" method="POST" id="frmRequest_Edit">
+                <form action="/recruits/{{ $detail->id }}" method="POST" id="frmRequest_Edit" novalidate="novalidate">
                     @method('PUT')
                     @csrf
                     <div class="alert alert-info alert-dismissible">
@@ -39,9 +40,9 @@
                     </div>
 
                     <div class="form-group" data-select2-id="120">
-                        <label>Other Skill <b> (Select Skill Other On Vacancy Name)</b></label>
+                        <label>Recruit Skills <b> (Select Skill Other On Vacancy Name)</b></label>
                         <div class="select2-purple" data-select2-id="119">
-                            <select name="skills[]" class="select2 select2-hidden-accessible" multiple data-placeholder="Select other skill" data-dropdown-css-class="select2-purple" style="width: 100%;" aria-hidden="true">
+                            <select required name="skills[]" class="select2 select2-hidden-accessible" multiple data-placeholder="Select other skill" data-dropdown-css-class="select2-purple" style="width: 100%;" aria-hidden="true">
                                 @foreach($skill_list as $item)
                                     @php
                                         $check = false;
@@ -103,7 +104,7 @@
                         <label class="col-form-label" for="inputSuccess">
                             Description
                         </label>
-                        <textarea name="description" id="editor"> {!! $detail -> description !!}</textarea>
+                        <textarea name="description" id="editor_frmEdit"> {!! $detail -> description !!}</textarea>
                     </div>
 
                     <div class="form-group">
