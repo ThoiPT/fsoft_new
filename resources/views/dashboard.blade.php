@@ -88,6 +88,7 @@
     <script>
         $(document).ready(function () {
             $('#table-dashboard').DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 initComplete: function () {
                     this.api()
                         .columns([2,3,4,6,7])

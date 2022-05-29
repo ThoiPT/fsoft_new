@@ -27,7 +27,6 @@
                                 </th>
                                 <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">
                                     Title
-
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                                     Vacancy
@@ -151,6 +150,7 @@
 <script>
     $(document).ready(function () {
         $('#table-recruit').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
             initComplete: function () {
                 this.api()
                     .columns([1,2,3,4,5,7])

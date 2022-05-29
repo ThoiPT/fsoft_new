@@ -108,9 +108,13 @@
         }
     </script>
     <script>
-        $(document).ready( function () {
-            $('#table-department').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#table-department').DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                initComplete: function () {
+                },
+            });
+        });
     </script>
 @endsection
 

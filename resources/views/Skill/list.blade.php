@@ -122,10 +122,15 @@
         }
 
     </script>
+    <!-- Responsive Table-->
     <script>
-        $(document).ready( function () {
-            $('#table-recruitSkill').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#table-recruitSkill').DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                initComplete: function () {
+                },
+            });
+        });
     </script>
 @endsection
 

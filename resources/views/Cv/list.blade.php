@@ -64,7 +64,7 @@
                                 @endif
                                 <td> {{ $item -> recruit -> department -> name ?? 'None' }}</td>
                                 <td>{{ $item -> recruit -> title ?? 'None' }}</td>
-                                <td>{{ $item -> recruit -> user -> name ?? 'None' }}</td>
+                                <td>{{ $item -> name }}</td>
                                 <td>{{ $item -> phone }}</td>
                                 <td>{{ $item -> address }}</td>
                                 <td>
@@ -110,9 +110,10 @@
 <script>
     $(document).ready(function () {
         $('#table-cv').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
             initComplete: function () {
                 this.api()
-                    .columns([1,2,3,4,5,6])
+                    .columns([1,2,3,4,6])
                     .every(function () {
                         var column = this;
                         var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')

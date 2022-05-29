@@ -107,12 +107,16 @@
                 }
             })
         }
-
     </script>
+    <!-- Responsive table-->
     <script>
-        $(document).ready( function () {
-            $('#table-vacancy').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#table-vacancy').DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                initComplete: function () {
+                },
+            });
+        });
     </script>
 @endsection
 
