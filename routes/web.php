@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::resource('vacancies', VacancyController::class)->middleware(['auth']);
 Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['auth']);
 
 //Other Controller
+Route::get('report',[ReportController::class,'index']);
+
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');

@@ -57,7 +57,8 @@ class CvController extends Controller
             return redirect()->route('cv.index')->with($stt_message, $message);
         }
 
-        // kiểm tra có files sẽ xử lý
+
+         // kiểm tra có files sẽ xử lý
         if ($request->hasFile('file')) {
             $allowedfileExtension = ['pdf'];
             $file = $request->file('file');

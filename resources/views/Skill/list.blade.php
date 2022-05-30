@@ -120,7 +120,6 @@
                 }
             })
         }
-
     </script>
     <!-- Responsive Table-->
     <script>

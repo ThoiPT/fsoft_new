@@ -483,3 +483,5 @@
         });
     });
 </script>
+<!-- ChartJS -->
+<script src="/template/plugins/chart.js/Chart.min.js"></script>

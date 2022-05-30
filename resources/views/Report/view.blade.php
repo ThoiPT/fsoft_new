@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-    <div class="col-md-6" style="max-width: 100%">
+    <div class="col-md-12" style="max-width: 100%">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Date picker</h3>

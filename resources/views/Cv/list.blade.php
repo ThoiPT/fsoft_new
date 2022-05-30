@@ -68,8 +68,9 @@
                                 <td>{{ $item -> phone }}</td>
                                 <td>{{ $item -> address }}</td>
                                 <td>
-                                    <a href={{ asset('storage/'.$item->file) }}>File CV</a>
-{{--                                    <iframe src={{ asset('storage/'.$item->file) }} class="embed-responsive-item"></iframe>--}}
+                                    <a class="btn btn-outline-primary" href={{ asset('storage/'.$item->file) }}>Download File</a>
+{{--                                    <iframe src="{{ asset('storage/'.$item->file) }}" class="embed-responsive-item"></iframe>--}}
+{{--                                    <iframe src="{{\Illuminate\Support\Facades\Storage::url($item->file) }}"></iframe>--}}
                                 </td>
                                 <td>
                                     <!-- Example single danger button -->

@@ -50,3 +50,10 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
 <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"> </script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> </script>
+<script src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"> </script>
+<script src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"> </script>
+<script src="https://code.highcharts.com/highcharts.js"> </script>
+
+
+

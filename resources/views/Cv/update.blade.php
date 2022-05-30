@@ -66,7 +66,9 @@
                             File Review
                         </label>
                     </div>
-                    <iframe src={{ asset('storage/'.$item->file) }} class="embed-responsive-item"></iframe>
+{{--                    <iframe src="storage/{{$detail->file }}" class="embed-responsive-item"></iframe>--}}
+                    <iframe src={{ asset('storage/'.$detail->file) }} class="embed-responsive-item"></iframe>
+{{--                    <iframe src="storage/5XfshAm7OpSwlhgnAmjZif4aDzkezUciaO585Q75.pdf" class="embed-responsive-item"></iframe>--}}
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
                             File change <b><i>(Option Not Required)</i></b>

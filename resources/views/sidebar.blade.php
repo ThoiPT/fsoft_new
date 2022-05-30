@@ -187,7 +187,7 @@
                 </li>
 
                 <li class="nav-header">REPORT</li>
-                <a href="/report/view" class="nav-link">
+                <a href="/report" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>View Report</p>
                 </a>

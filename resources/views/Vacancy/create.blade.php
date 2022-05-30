@@ -20,8 +20,9 @@
                     <div class="form-group">
                         <i class="fa-solid fa-inbox"></i>
                         <label for="exampleInputEmail1"> Vacancy Name <b>(Required)</b></label>
-                        <input name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter name" pattern="[^0-9]*" title="First name cannot contains any digits, Please enter at least 3 characters.">
+                        <input name="name" class="form-control" id="name" placeholder="Enter name" pattern="[^0-9]*" title="First name cannot contains any digits, Please enter at least 3 characters.">
                     </div>
+                    <span id="check-superior-status"></span><br />
 
                     <div class="form-group">
                         <i class="fa-solid fa-inbox"></i>
@@ -40,5 +41,4 @@
         <!-- /.card -->
     </div>
 @endsection
-
 

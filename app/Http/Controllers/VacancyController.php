@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use stdClass;
+use Symfony\Component\Console\Input\Input;
 
 class VacancyController extends Controller
 {
@@ -37,8 +38,8 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
+//        $check = Vacancy::where('name',$request->name)->exists();
         $add = Vacancy::create($request->all());
-
         if ($add) {
             $stt_message = 'success';
             $message = 'Vacancy Add Success';
@@ -47,6 +48,7 @@ class VacancyController extends Controller
             $message = 'Vacancy Add Failed';
         }
         return redirect()->route('vacancies.index')->with($stt_message, $message);
+
     }
 
     /**
