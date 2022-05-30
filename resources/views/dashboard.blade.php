@@ -19,7 +19,19 @@
         <!-- /.card-header -->
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 grid-table">
+
+                        <form method="GET" action="{{ route('dashboard') }}" id="search">
+                            From: <input type="date" name="start_date"> To <input type="date" name="end_date">
+                            Department
+                            <select name="department">
+                                @foreach($department_list as $item)
+                                    <option value="{{ $item -> id }}">{{ $item -> name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit"> Search </button>
+                        </form>
+
                         <table id="table-dashboard" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                                 <tr>
@@ -71,24 +83,36 @@
                                     <th rowspan="1" colspan="1">Recruit Name</th>
                                     <th rowspan="1" colspan="1">Vacancy Name</th>
                                     <th rowspan="1" colspan="1">Close Date</th>
-
                                     <th rowspan="1" colspan="1">Vacancy</th>
                                     <th rowspan="1" colspan="1">Department</th>
                                     <th rowspan="1" colspan="1">Email</th>
 {{--                                    <th rowspan="1" colspan="1">Action</th>--}}
                                 </tr>
                             </tfoot>
-
                         </table>
-
                     </div>
                 </div>
             </div>
         </div>
         <!-- /.card-body -->
     </div>
+@endsection
+@push('js')
     <script>
         $(document).ready(function () {
+
+            $('#search').on('submit', function (e){
+                e.preventDefault();
+                const table = $('#table-dashboard');
+                $.ajax({
+                    method: "GET",
+                    url: $(this).attr('action'),
+                    data: $(this).serialize()
+                }).done(function (response) {
+                    const html = $(response).find('#table-dashboard').html();
+                    table.html(html);
+                })
+            })
             $('#table-dashboard').DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 initComplete: function () {
@@ -114,5 +138,4 @@
             });
         });
     </script>
-@endsection
-
+@endpush

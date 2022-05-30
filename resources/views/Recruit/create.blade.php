@@ -18,7 +18,8 @@
                 <form action="{{ route('recruits.store') }}" method="POST" novalidate="novalidate" id="frmRequest">
                     @csrf
                     <input name="user_id" hidden value="{{ auth()->user()->id }}">
-                    <input hidden name="department_id" value="{{optional(\App\Models\User::find(\Illuminate\Support\Facades\Auth::id())->department)->id }}">
+                    <input name="department_id" hidden value="{{ auth()->user()->department->id }}">
+{{--                    <input hidden name="department_id" value="{{optional(\App\Models\User::find(\Illuminate\Support\Facades\Auth::id())->department)->id }}">--}}
 
                     <div class="form-group">
                         <i class="fa-solid fa-keyboard"></i>
