@@ -98,8 +98,6 @@
         #example1_paginate {
             display: none;
         }
-
-
     </style>
     <div class="card">
         <div class="card-header">
@@ -110,15 +108,15 @@
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="GET" action="{{ route('dashboard') }}" id="search">
+                        <form method="GET" action="{{ route('report') }}" id="search">
                             <div class="row">
                                 <div class="col">
                                     <label>From</label>
-                                    <input type="date" name="start_date" class="form-control">
+                                    <input type="date" name="start_date"  class="form-control">
                                 </div>
                                 <div class="col">
                                     <label>To</label>
-                                    <input type="date" name="end_date" class="form-control">
+                                    <input type="date" name="end_date"  class="form-control">
                                 </div>
                                 <div class="col">
                                     <label>Department</label>
@@ -131,6 +129,10 @@
                                 </div>
                                 <div class="form-group"></div>
                                 <button style="max-width: 31%; margin: 0px 13px" class="btn btn-success" type="submit"> Search </button>
+                            </div>
+                            <p></p>
+                            <div class="alert alert-success" role="alert" id="timeReport">
+                                Time report to: <a id="fromDate"></a> From: <a id="toDate"></a>
                             </div>
                         </form>
                         <table id="table-dashboard" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
@@ -179,18 +181,20 @@
                                 <th rowspan="1" colspan="1">Email</th>
                             </tr>
                             </tfoot>
-
                         </table>
+
                     </div>
                 </div>
             </div>
         </div>
         <!-- /.card-body -->
     </div>
+
 @endsection
 @push('js')
     <script>
         $(document).ready(function () {
+
             $('#search').on('submit', function (e){
                 e.preventDefault();
                 const table = $('#table-dashboard');
@@ -200,33 +204,42 @@
                     data: $(this).serialize()
                 }).done(function (response) {
                     const html = $(response).find('#table-dashboard').html();
-                    const show = $(response).find('#show').html();
                     table.html(html);
                 })
             })
-            $('#table-dashboard').DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                initComplete: function () {
-                    this.api()
-                        .columns([0,1,2,3,4,6,8,9])
-                        .every(function () {
-                            var column = this;
-                            var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
-                                .appendTo($(column.footer()).empty())
-                                .on('change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                });
-                            column.data().unique().sort().each( function ( d, j ) {
-                                if(column.search() === '^'+d+'$'){
-                                    select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
-                                } else {
-                                    select.append( '<option>'+d+'</option>' )
-                                }
-                            } );
-                        });
-                },
-            });
         });
     </script>
+{{--    <script>--}}
+{{--        function getVal(){--}}
+{{--            var x = document.getElementById("start_date").value;--}}
+{{--            var y = document.getElementById("end_date").value;--}}
+{{--            document.getElementById("fromDate").innerHTML = x;--}}
+{{--            document.getElementById("toDate").innerHTML = y;--}}
+{{--        }--}}
+{{--    </script>--}}
+{{--    <script>--}}
+{{--        $('#table-dashboard').DataTable({--}}
+{{--            "responsive": true, "lengthChange": false, "autoWidth": false,--}}
+{{--            initComplete: function () {--}}
+{{--                this.api()--}}
+{{--                    .columns([1,2,3,4,6,8,9])--}}
+{{--                    .every(function () {--}}
+{{--                        var column = this;--}}
+{{--                        var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')--}}
+{{--                            .appendTo($(column.footer()).empty())--}}
+{{--                            .on('change', function () {--}}
+{{--                                var val = $.fn.dataTable.util.escapeRegex($(this).val());--}}
+{{--                                column.search(val ? '^' + val + '$' : '', true, false).draw();--}}
+{{--                            });--}}
+{{--                        column.data().unique().sort().each( function ( d, j ) {--}}
+{{--                            if(column.search() === '^'+d+'$'){--}}
+{{--                                select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )--}}
+{{--                            } else {--}}
+{{--                                select.append( '<option>'+d+'</option>' )--}}
+{{--                            }--}}
+{{--                        } );--}}
+{{--                    });--}}
+{{--            },--}}
+{{--        });--}}
+{{--    </script>--}}
 @endpush

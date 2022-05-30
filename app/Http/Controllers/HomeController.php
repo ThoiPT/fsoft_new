@@ -30,7 +30,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $recruit_list = Recruit::where('status', '=', 1);
+        $recruit_list = Recruit::where('status', '=', 1)->where('department_id',2);
         // Nếu chọn đủ cả 3 trường
         if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
             $from = date($request->start_date);
@@ -65,7 +65,20 @@ class HomeController extends Controller
         $account_list = User::all();
         $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
         $department_list = Department::all();
-        return view('dashboard', compact('recruit_list', 'vacancy_list', 'account_list', 'cvOnboard','department_list'));
+
+        $cv_list = CV::all();
+        $recruit_chart_open = Recruit::where('status',1)->count();
+
+        return view('dashboard',
+            compact(
+                'recruit_list',
+                'vacancy_list',
+                'account_list',
+                'cvOnboard',
+                'department_list',
+                'cv_list',
+                'recruit_chart_open'
+            ));
     }
 
     public function logout()
