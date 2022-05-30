@@ -37,7 +37,7 @@ Route::resource('vacancies', VacancyController::class)->middleware(['auth']);
 Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['auth']);
 
 //Other Controller
-Route::get('report',[ReportController::class,'index']);
+Route::get('/report',[ReportController::class,'index'])->middleware(['auth'])->name('report');;
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');

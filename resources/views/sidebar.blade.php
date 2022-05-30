@@ -13,7 +13,7 @@
                 <img src="/template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="/dashboard" class="d-block"></a>
+                <a href="#" class="d-block"></a>
                 <a href="/logout" class="d-block">Logout</a>
                 <p style="color: white; font-weight: bold" href="" class="d-block">{{auth()->user()->email}}</p>
             </div>
@@ -32,14 +32,10 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="nav-icon fas fa-dashboard"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
+                <a href="/dashboard" class="nav-link">
+                    <i class="fa fa-dashboard"></i>
+                    <p>Dashboard</p>
+                </a>
                 <li class="nav-header">RECRUITMENT MANAGEMENT</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -187,10 +183,12 @@
                 </li>
 
                 <li class="nav-header">REPORT</li>
-                <a href="/report" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>View Report</p>
-                </a>
+                    <a href="{{ route('report') }}" class="nav-link">
+                        <i class="nav-icon fas fa-street-view"></i>
+                        <p>
+                            View Report
+                        </p>
+                    </a>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

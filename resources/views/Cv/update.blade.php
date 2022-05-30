@@ -67,7 +67,7 @@
                         </label>
                     </div>
 {{--                    <iframe src="storage/{{$detail->file }}" class="embed-responsive-item"></iframe>--}}
-                    <iframe src={{ asset('storage/'.$detail->file) }} class="embed-responsive-item"></iframe>
+{{--                    <iframe src={{ asset('storage/'.$detail->file) }} class="embed-responsive-item"></iframe>--}}
 {{--                    <iframe src="storage/5XfshAm7OpSwlhgnAmjZif4aDzkezUciaO585Q75.pdf" class="embed-responsive-item"></iframe>--}}
                     <div class="form-group">
                         <label class="col-form-label" for="inputSuccess">
