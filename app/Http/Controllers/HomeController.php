@@ -9,6 +9,7 @@ use App\Models\Recruit;
 use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -31,6 +32,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $recruit_list = Recruit::where('status', '=', 1)->where('department_id',2);
+
         // Nếu chọn đủ cả 3 trường
         if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
             $from = date($request->start_date);
@@ -67,8 +69,14 @@ class HomeController extends Controller
         $department_list = Department::all();
 
         $cv_list = CV::all();
-        $recruit_chart_open = Recruit::where('status',1)->count();
-
+        // Đưa value vao array để truyền qua property của chart
+        $recruit_chart_open[] = Recruit::where('status',1)->count();
+        $recruit_chart_close[] = Recruit::where('status',0)->count();
+        $cv_new[] = CV::where('status',Status::New)->count();
+        $cv_interview[] = CV::where('status',Status::Interview)->count();
+        $cv_offer[] = CV::where('status',Status::Offer)->count();
+        $cv_onboard[] = CV::where('status',Status::Onboard)->count();
+//        dd($recruit_chart_open);
         return view('dashboard',
             compact(
                 'recruit_list',
@@ -77,8 +85,14 @@ class HomeController extends Controller
                 'cvOnboard',
                 'department_list',
                 'cv_list',
-                'recruit_chart_open'
+                'recruit_chart_open',
+                'recruit_chart_close',
+                'cv_new',
+                'cv_interview',
+                'cv_offer',
+                'cv_onboard',
             ));
+
     }
 
     public function logout()

@@ -75,8 +75,10 @@
 
     <div class="card card-danger">
         <div class="card-header">
-            <h3 class="card-title">Donut Chart</h3>
-
+            <h1 class="card-title" style="font-size: 25px">
+                <i class="fa-solid fa-chart-pie"></i>
+                    Human Resource Management
+            </h1>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -189,7 +191,7 @@
             {{--// Khởi tạo Array để lưu các name--}}
             {{--var departName = [];--}}
             {{--@foreach($recruit_chart_open as $item)--}}
-            {{--    departName.push('{{ $item }}')--}}
+            {{--    departName.push('{{ $item -> title }}')--}}
             {{--@endforeach--}}
 
                 var donutData = {
@@ -204,12 +206,12 @@
                 datasets: [
                     {
                         data: [
-                            300,
-                            500,
-                            400,
-                            600,
-                            300,
-                            100
+                            @foreach($recruit_chart_open as $item) {{ $item }} @endforeach,
+                            @foreach($recruit_chart_close as $item) {{ $item }} @endforeach,
+                            @foreach($cv_new as $item) {{ $item }} @endforeach,
+                            @foreach($cv_interview as $item) {{ $item }} @endforeach,
+                            @foreach($cv_offer as $item) {{ $item }} @endforeach,
+                            @foreach($cv_onboard as $item) {{ $item }} @endforeach,
                         ],
                         backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                     }
@@ -222,7 +224,7 @@
             //Create pie or douhnut chart
             // You can switch between pie and douhnut using the method below.
             new Chart(donutChartCanvas, {
-                type: 'doughnut',
+                type: 'pie',
                 data: donutData,
                 options: donutOptions
             })
