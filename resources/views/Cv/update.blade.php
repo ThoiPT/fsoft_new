@@ -65,8 +65,15 @@
                         <label class="col-form-label" for="inputSuccess">
                             File Review
                         </label>
+
+                            <iframe
+                                src='{{ asset('storage/'.$detail->file) }}'
+                                width="100%"
+                                height="500px"
+                            >
+                                <p>This browser does not support PDF! <br> Trình duyệt không hỗ trợ. </p>
+                            </iframe>
                     </div>
-{{--                    <iframe src="storage/{{$detail->file }}" class="embed-responsive-item"></iframe>--}}
 {{--                    <iframe src={{ asset('storage/'.$detail->file) }} class="embed-responsive-item"></iframe>--}}
 {{--                    <iframe src="storage/5XfshAm7OpSwlhgnAmjZif4aDzkezUciaO585Q75.pdf" class="embed-responsive-item"></iframe>--}}
                     <div class="form-group">

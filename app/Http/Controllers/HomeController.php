@@ -31,14 +31,16 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $recruit_list = Recruit::where('status', '=', 1)->where('department_id',2);
+        $department_id = $request->department_name;
+
+        $recruit_list = Recruit::where('status', '=', 1);
 
         // Nếu chọn đủ cả 3 trường
         if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
             $from = date($request->start_date);
             $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $depart = $request->department_name;
-            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to])->where('department_id',$depart);
+            $depart = $request->department_name;//???? a`, cai nay la t thong ke cho chon ngay thang thoi, k lien quan view Dashboad, ý tao là chỗ này m lấy id hay name?, name
+            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to])->where('department_id',$depart);//?? soa ở đây lại so sánh với filed id?
         }
         // Nếu chỉ chọn ngày bắt đầu -> show dữ liệu từ ngày bắt đầu đến hiện tại
         if(isset($request->start_date) && !isset($request->end_date) && !isset($request->department_name)){

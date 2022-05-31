@@ -44,4 +44,6 @@ Route::get('/report',[ReportController::class,'index'])->middleware(['auth'])->n
 Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/logout',[HomeController::class,'logout']);
 
+
+
 Auth::routes();

@@ -32,10 +32,13 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+{{--                @if(Auth::user()->role == \App\Enums\UserRole::Admin)--}}
                 <a href="/dashboard" class="nav-link">
                     <i class="fa fa-dashboard"></i>
                     <p>Dashboard</p>
                 </a>
+{{--                @endif--}}
+
                 <li class="nav-header">RECRUITMENT MANAGEMENT</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

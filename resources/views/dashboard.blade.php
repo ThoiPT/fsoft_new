@@ -109,7 +109,6 @@
                 <div class="card card-success collapsed-card">
                     <div class="card-header">
                         <h3 class="card-title">Department: <b>{{$item->name}}</b></h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
                             </button>
@@ -122,50 +121,50 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Total Recruit <span class="float-right badge bg-danger">31</span>
+                                    Total Recruit <span class="float-right badge bg-danger">{{ $item->quantityRecruit() }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Total CV <span class="float-right badge bg-danger">5</span>
+                                    Total CV <span class="float-right badge bg-danger">{{ $item->cv->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (New) <span class="float-right badge bg-danger">12</span>
+                                    Curriculum Vitae (New) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::New)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (Internship) <span class="float-right badge bg-danger">842</span>
+                                    Curriculum Vitae (Internship) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Interview)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (Send Result) <span class="float-right badge bg-danger">842</span>
+                                    Curriculum Vitae (Send Result) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::SendResult)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (Offer) <span class="float-right badge bg-danger">842</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Curriculum Vitae (Onboard) <span class="float-right badge bg-danger">842</span>
+                                    Curriculum Vitae (Offer) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Offer)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (Reject) <span class="float-right badge bg-danger">842</span>
+                                    Curriculum Vitae (Onboard) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Onboard)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Curriculum Vitae (Working) <span class="float-right badge bg-danger">842</span>
+                                    Curriculum Vitae (Reject) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Reject)->count('id') }}</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Curriculum Vitae (Working) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::working)->count('id') }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -177,29 +176,22 @@
             </div>
         @endforeach
     </div>
-
-    @foreach($recruit_list as $i)
-        {{ $i -> title }} - {{$i ->department -> name}}<br>
-    @endforeach
-
 @endsection
 @push('js')
     <script>
         $(function () {
             var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-
             {{--// Khởi tạo Array để lưu các name--}}
             {{--var departName = [];--}}
             {{--@foreach($recruit_chart_open as $item)--}}
             {{--    departName.push('{{ $item -> title }}')--}}
             {{--@endforeach--}}
-
                 var donutData = {
                 labels: [
                     'Recruit Open',
                     'Recruit Close',
                     'Curriculum Vitae (New)',
-                    'Curriculum Vitae (Internship)',
+                    'Curriculum Vitae (Interview)',
                     'Curriculum Vitae (Offer)',
                     'Curriculum Vitae (Onboard)',
                 ],
@@ -230,61 +222,4 @@
             })
         })
     </script>
-
-
-
-{{--    <script>--}}
-    {{--    $(document).ready(function () {--}}
-    {{--        // Create DataTable--}}
-    {{--        var table = $('#table-dashboard').DataTable({--}}
-    {{--            responsive: true--}}
-    {{--        });--}}
-
-    {{--        // Create the chart with initial data--}}
-    {{--        var container = $('<div/>').insertBefore(table.table().container());--}}
-
-    {{--        var chart = Highcharts.chart(container[0], {--}}
-    {{--            chart: {--}}
-    {{--                type: 'pie',--}}
-    {{--            },--}}
-    {{--            title: {--}}
-    {{--                text: 'Human Resource Management System FPT',--}}
-    {{--            },--}}
-    {{--            series: [--}}
-    {{--                {--}}
-    {{--                    data: chartData(table),--}}
-    {{--                },--}}
-    {{--            ],--}}
-    {{--        });--}}
-
-    {{--        // On each draw, update the data in the chart--}}
-    {{--        table.on('draw', function () {--}}
-    {{--            chart.series[0].setData(chartData(table));--}}
-    {{--        });--}}
-    {{--    });--}}
-
-    {{--    function chartData(table) {--}}
-    {{--        var counts = {};--}}
-
-    {{--        // Count the number of entries for each position--}}
-    {{--        table--}}
-    {{--            .column(2, { search: 'applied' })--}}
-    {{--            .data()--}}
-    {{--            .each(function (val) {--}}
-    {{--                if (counts[val]) {--}}
-    {{--                    counts[val] += 1;--}}
-    {{--                } else {--}}
-    {{--                    counts[val] = 1;--}}
-    {{--                }--}}
-    {{--            });--}}
-
-    {{--        // And map it to the format highcharts uses--}}
-    {{--        return $.map(counts, function (val, key) {--}}
-    {{--            return {--}}
-    {{--                name: key,--}}
-    {{--                y: val,--}}
-    {{--            };--}}
-    {{--        });--}}
-    {{--    }--}}
-    {{--</script>--}}
 @endpush
