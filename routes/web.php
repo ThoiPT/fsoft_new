@@ -8,6 +8,7 @@ use App\Http\Controllers\RecruitSkillController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacancyController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
@@ -27,6 +28,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 //    return view ("auth/login");
 });
+
 
 Route::resource('recruits', RecruitController::class)->middleware(['auth']);
 Route::resource('skills', SkillController::class)->middleware(['auth']);
