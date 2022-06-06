@@ -94,5 +94,4 @@
     <!-- ./wrapper -->
     @include('footer')
 </body>
-
 </html>

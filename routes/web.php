@@ -23,6 +23,10 @@ use App\Http\Controllers\ReportController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Chạy symbol link storage bằng cách gọi trực tiếp bằng facade
+Route::get('/linkstorage',function (){
+   Artisan::call('storage:link');
+});
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -39,7 +43,16 @@ Route::resource('vacancies', VacancyController::class)->middleware(['auth']);
 Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['auth']);
 
 //Other Controller
-Route::get('/report',[ReportController::class,'index'])->middleware(['auth'])->name('report');;
+Route::get('/report',[ReportController::class,'index'])->middleware(['auth'])->name('report');
+Route::get('/report/total_recruit/{id}/{name}',[ReportController::class,'total_recruit'])->middleware(['auth']);
+//Route::get('/report/total_cv/{id1}/{id2}',[ReportController::class,'total_cv'])->middleware(['auth']);
+Route::get('/report/total_new/{id}/{name}',[ReportController::class,'total_new'])->middleware(['auth']);
+Route::get('/report/total_interview',[ReportController::class,'total_interview'])->middleware(['auth'])->name('total_interview');
+//Route::get('/report/total_send',[ReportController::class,'total_cv'])->middleware(['auth'])->name('total_cv');
+//Route::get('/report/total_offer',[ReportController::class,'total_cv'])->middleware(['auth'])->name('total_cv');
+//Route::get('/report/total_onboard',[ReportController::class,'total_cv'])->middleware(['auth'])->name('total_cv');
+//Route::get('/report/total_reject',[ReportController::class,'total_cv'])->middleware(['auth'])->name('total_cv');
+//Route::get('/report/total_working',[ReportController::class,'total_cv'])->middleware(['auth'])->name('total_cv');
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');

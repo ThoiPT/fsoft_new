@@ -35,35 +35,6 @@ class HomeController extends Controller
 
         $recruit_list = Recruit::where('status', '=', 1);
 
-        // Nếu chọn đủ cả 3 trường
-        if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
-            $from = date($request->start_date);
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $depart = $request->department_name;//???? a`, cai nay la t thong ke cho chon ngay thang thoi, k lien quan view Dashboad, ý tao là chỗ này m lấy id hay name?, name
-            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to])->where('department_id',$depart);//?? soa ở đây lại so sánh với filed id?
-        }
-        // Nếu chỉ chọn ngày bắt đầu -> show dữ liệu từ ngày bắt đầu đến hiện tại
-        if(isset($request->start_date) && !isset($request->end_date) && !isset($request->department_name)){
-            $from = date($request->start_date);
-            $recruit_list = $recruit_list->where('created_at', '>',$from);
-        }
-        // Nếu chỉ chọn ngày kết thúc
-        if(isset($request->end_date) && !isset($request->start_date) && !isset($request->department_name)){
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $recruit_list = $recruit_list->where('created_at', '<',$to);
-        }
-        // Nếu chỉ chọn department
-        if(isset($request->department_name) && !isset($request->start_date) && !isset($request->end_date)){
-            $depart = $request->department_name;
-            $recruit_list = $recruit_list->where('department_id', '=',$depart);
-        }
-        // Nếu chỉ chọn ngày bắt đầu, ngày kết thúc mà không chọn department
-        if(isset($request->start_date) && isset($request->end_date) && !isset($request->department_name) ){
-            $from = date($request->start_date);
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to]);
-        }
-
         $recruit_list = $recruit_list->paginate(50);
         $vacancy_list = Vacancy::all();
         $account_list = User::all();

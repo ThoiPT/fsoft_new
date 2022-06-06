@@ -9,8 +9,8 @@ use App\Models\Recruit;
 use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-
 class ReportController extends Controller
 {
     /**
@@ -30,44 +30,142 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-//        dd($request);
-        $recruit_list = Recruit::where('status', '=', 1);
-        // Nếu chọn đủ cả 3 trường
-        if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
-            $from = date($request->start_date);
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $depart = $request->department_name;
-            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to])->where('department_id',$depart);
-        }
-        // Nếu chỉ chọn ngày bắt đầu -> show dữ liệu từ ngày bắt đầu đến hiện tại
-        if(isset($request->start_date) && !isset($request->end_date) && !isset($request->department_name)){
-            $from = date($request->start_date);
-            $recruit_list = $recruit_list->where('created_at', '>',$from);
-        }
-        // Nếu chỉ chọn ngày kết thúc
-        if(isset($request->end_date) && !isset($request->start_date) && !isset($request->department_name)){
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $recruit_list = $recruit_list->where('created_at', '<',$to);
-        }
-        // Nếu chỉ chọn department
-        if(isset($request->department_name) && !isset($request->start_date) && !isset($request->end_date)){
-            $depart = $request->department_name;
-            $recruit_list = $recruit_list->where('department_id', '=',$depart);
-        }
-        // Nếu chỉ chọn ngày bắt đầu, ngày kết thúc mà không chọn department
-        if(isset($request->start_date) && isset($request->end_date) && !isset($request->department_name) ){
-            $from = date($request->start_date);
-            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-            $recruit_list = $recruit_list->whereBetween('created_at', [$from, $to]);
+
+        $recruit_list = Recruit::where('status',1)->get();
+        $department_list = Department::all();
+
+        $from = date('Y-m-d H:i:s', strtotime($request->start_date));
+        $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
+        $depart = $request->department_name;
+
+        $list_cv = null;
+
+        // Không chọn Department
+        if (isset($request->start_date) && isset($request->end_date) && !isset($request->department_name)) {
+            $department_list = Department::select("id","name")
+                ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($from, $to){
+                    $query
+                        ->whereBetween('recruits.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_total' => function($query) use ($from, $to){
+                    $query
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_interview' => function($query) use ($from, $to){
+                    $query
+                        ->where('c_v_s.status','=',Status::Interview)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_offer' => function($query) use ($from, $to){
+                    $query
+                        ->where('c_v_s.status','=',Status::Offer)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_onboard' => function($query) use ($from, $to){
+                    $query
+                        ->where('c_v_s.status','=',Status::Onboard)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_reject' => function($query) use ($from, $to){
+                    $query
+                        ->where('c_v_s.status','=',Status::Reject)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_working' => function($query) use ($from, $to){
+                    $query
+                        ->where('c_v_s.status','=',Status::working)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }]) ->get();
         }
 
-        $recruit_list = $recruit_list->paginate(50);
+        // Chọn cả 3
+        if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
+            $department_list = Department::select("id","name")
+                ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($from, $to, $depart){
+                    $query
+                        ->whereBetween('recruits.created_at',[$from, $to])
+                        ->where('recruits.department_id',$depart);
+                }])
+                ->withCount(['cv','cv as cv_total' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->whereBetween('c_v_s.created_at',[$from, $to])
+                        ->where('recruits.department_id',$depart);
+                }])
+                ->withCount(['cv','cv as cv_interview' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->where('c_v_s.status','=',Status::Interview)
+                        ->where('recruits.department_id',$depart)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_offer' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->where('c_v_s.status','=',Status::Offer)
+                        ->where('recruits.department_id',$depart)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_onboard' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->where('c_v_s.status','=',Status::Onboard)
+                        ->where('recruits.department_id',$depart)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_reject' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->where('c_v_s.status','=',Status::Reject)
+                        ->where('recruits.department_id',$depart)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->withCount(['cv','cv as cv_working' => function($query) use ($from, $to, $depart){
+                    $query
+                        ->where('c_v_s.status','=',Status::working)
+                        ->where('recruits.department_id',$depart)
+                        ->whereBetween('c_v_s.created_at',[$from, $to]);
+                }])
+                ->get();
+        }
+
         $vacancy_list = Vacancy::all();
         $account_list = User::all();
         $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
-        $department_list = Department::all();
-        return view('Report/view', compact('recruit_list', 'vacancy_list', 'account_list', 'cvOnboard','department_list'));
+
+        return view('Report/view', compact(
+                                        'recruit_list',
+                                      'vacancy_list',
+                                                'account_list',
+                                                'cvOnboard',
+                                                'department_list',
+                                                'list_cv',
+                                                'from',
+                                                'to'
+            ));
     }
+
+    public function total_recruit($id){
+//        $list = Recruit::all();
+        $list = Recruit::where('department_id',$id)->get();
+        $department_list = Department::all();
+        return view('Report.total_recruit',compact('department_list','list'));
+    }
+
+//    public function total_cv($id1, $id2){
+//        $dp = Department::all();
+//        $list = CV::where('recruit_id',$id1)->where('department_id',$dp->$id2)->get();
+//        return view('Report.total_cv',compact('list'));
+//    }
+
+    public function total_new($id){
+//        $list = CV::where('status',Status::New)->get();
+        $list = CV::all();
+        $department_list = Department::all();
+//        $list = CV::where('status',2)->where('recruit_id',6)->get();
+        return view('Report.total_new',compact('list','department_list'));
+    }
+
+    public function total_interview(){
+        $list = CV::where('status',Status::Interview);
+        return view('Report.total_interview',compact('list'));
+    }
+
 
     public function logout()
     {

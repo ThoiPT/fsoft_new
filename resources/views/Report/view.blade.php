@@ -108,15 +108,15 @@
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="GET" action="{{ route('report') }}" id="search">
+                        <form method="GET" action="{{ route('report') }}" id="frmSearch">
                             <div class="row">
                                 <div class="col">
                                     <label>From</label>
-                                    <input type="date" name="start_date"  class="form-control">
+                                    <input type="date" name="start_date" class="form-control" >
                                 </div>
                                 <div class="col">
                                     <label>To</label>
-                                    <input type="date" name="end_date"  class="form-control">
+                                    <input type="date" name="end_date"  class="form-control" >
                                 </div>
                                 <div class="col">
                                     <label>Department</label>
@@ -128,57 +128,68 @@
                                     </select>
                                 </div>
                                 <div class="form-group"></div>
+                                <div class="col">
+                                    <label>Select Month</label>
+                                    <input type="month" name="month" class="form-control">
+                                </div>
                                 <button style="max-width: 31%; margin: 0px 13px" class="btn btn-success" type="submit"> Search </button>
                             </div>
-                            <p></p>
+                            <br>
+
                             <div class="alert alert-success" role="alert" id="timeReport">
-                                Time report to: <a id="fromDate"></a> From: <a id="toDate"></a>
+                                Time report From: <a id="fromDate">
+                                    @if( $from == null )
+                                        ALL
+                                    @else
+                                        {{ $from }}
+                                    @endif
+                                </a> To: <a id="toDate">
+                                    @if( $to == null )
+                                        ALL
+                                    @else
+                                        {{ $to }}
+                                    @endif
+                                </a>
                             </div>
+
                         </form>
                         <table id="table-dashboard" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Department</th>
-                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Recruit Name</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Vacancy Name</th>
-
-                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Level</th>
-                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Experience</th>
-
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Slot</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Email</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Request</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Curriculum Vitae</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Interview</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Offer</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Onboard</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Reject</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Working</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($recruit_list as $item)
+                            @foreach($department_list as $item)
                                 <tr class="odd">
-                                    <td> {{ $item -> department -> name ?? 'None'}}</td>
-                                    <td>{{ $item -> title }}</td>
-                                    <td>{{ $item -> vacancy -> name ?? 'None' }}</td>
-                                    <td>{{ $item -> level }}</td>
-                                    <td>{{ $item -> exp }}</td>
-                                    @if($item -> numRecruit <= 0)
-                                        <td>
-                                            <small class="badge badge-danger">Full Slot</small>
-                                        </td>
-                                    @else
-                                        <td>
-                                            <small class="badge badge-info">Available: {{$item->numRecruit}} </small>
-                                        </td>
-                                    @endif
-                                    <td>{{ $item -> user -> email ?? 'None' }}</td>
+                                    <td> {{ $item -> name }}</td>
+                                    <td>{{ $item -> recruit_total }}</td>
+                                    <td>{{ $item -> cv_total }}</td>
+                                    <td>{{ $item -> cv_interview }}</td>
+                                    <td>{{$item->cv_offer}}</td>
+                                    <td>{{ $item->cv_onboard }}</td>
+                                    <td>{{ $item -> cv_reject }}</td>
+                                    <td>{{ $item -> cv_working }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th rowspan="1" colspan="1">Department</th>
-                                <th rowspan="1" colspan="1">Recruit Name</th>
-                                <th rowspan="1" colspan="1">Vacancy Name</th>
-                                <th rowspan="1" colspan="1">Total Recruit</th>
-                                <th rowspan="1" colspan="1">Total CV</th>
-                                <th rowspan="1" colspan="1">Vacancy</th>
-                                <th rowspan="1" colspan="1">Email</th>
+                                <th rowspan="1" colspan="1">Request</th>
+                                <th rowspan="1" colspan="1">Curriculum Vitae</th>
+                                <th rowspan="1" colspan="1">Interview</th>
+                                <th rowspan="1" colspan="1">Offer</th>
+                                <th rowspan="1" colspan="1">Onboard</th>
+                                <th rowspan="1" colspan="1">Reject</th>
+                                <th rowspan="1" colspan="1">Working</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -187,7 +198,9 @@
                 </div>
             </div>
         </div>
-        <!-- /.card-body -->
+{{--        @foreach($recruit_list as $re)--}}
+{{--            {{ $re -> id }} - {{ $re -> department -> name ?? 'None' }}<br>--}}
+{{--        @endforeach--}}
     </div>
 
 @endsection
@@ -195,7 +208,7 @@
     <script>
         $(document).ready(function () {
 
-            $('#search').on('submit', function (e){
+            $('#frmSearch').on('submit', function (e){
                 e.preventDefault();
                 const table = $('#table-dashboard');
                 $.ajax({

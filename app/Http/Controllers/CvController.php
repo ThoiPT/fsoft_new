@@ -23,6 +23,11 @@ class CvController extends Controller
         return view('Cv.list', compact('list'));
     }
 
+    public function cvNew()
+    {
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

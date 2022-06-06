@@ -24,4 +24,9 @@ class CV extends Model
     {
         return $this->belongsTo(Recruit::class);
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

@@ -20,7 +20,7 @@ class Department extends Model
     }
 
     public function recruit(){
-        return $this->hasMany(Recruit::class);
+        return $this->hasMany(Recruit::class,'department_id','id');
     }
 
     //use: Department::find($id)->quantityRecruit();
@@ -31,6 +31,5 @@ class Department extends Model
     public function cv(){
         return $this->hasManyThrough(CV::class, Recruit::class);
     }
-
 
 }

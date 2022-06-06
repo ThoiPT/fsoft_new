@@ -122,50 +122,50 @@
                     <div class="card-footer p-0">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="/report/total_recruit/{{$item->id}}/{{$item->name}}" class="nav-link">
                                     Total Recruit <span class="float-right badge bg-danger">{{ $item->quantityRecruit() }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="/report/total_cv/{{$item->id}}/{{$item->name}}" class="nav-link">
                                     Total CV <span class="float-right badge bg-danger">{{ $item->cv->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="/report/total_new/{{$item->id}}/{{$item->name}}" class="nav-link">
                                     Curriculum Vitae (New) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::New)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Curriculum Vitae (Internship) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Interview)->count('id') }}</span>
+                                <a href="{{ route('total_interview') }}" class="nav-link">
+                                    Curriculum Vitae (Interview) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Interview)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="" class="nav-link">
                                     Curriculum Vitae (Send Result) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::SendResult)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="" class="nav-link">
                                     Curriculum Vitae (Offer) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Offer)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="" class="nav-link">
                                     Curriculum Vitae (Onboard) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Onboard)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="" class="nav-link">
                                     Curriculum Vitae (Reject) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Reject)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="" class="nav-link">
                                     Curriculum Vitae (Working) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::working)->count('id') }}</span>
                                 </a>
                             </li>

@@ -36,7 +36,7 @@ class Recruit extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class,'department_id');
     }
 
     public function recruit_skill()
