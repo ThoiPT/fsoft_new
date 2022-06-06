@@ -127,45 +127,45 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/total_cv/{{$item->id}}/{{$item->name}}" class="nav-link">
+                                <a href="/report/total_cv/{{$item->id}}" class="nav-link">
                                     Total CV <span class="float-right badge bg-danger">{{ $item->cv->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/total_new/{{$item->id}}/{{$item->name}}" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::New }}" class="nav-link">
                                     Curriculum Vitae (New) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::New)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('total_interview') }}" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::Interview }}" class="nav-link">
                                     Curriculum Vitae (Interview) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Interview)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::SendResult }}" class="nav-link">
                                     Curriculum Vitae (Send Result) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::SendResult)->count('id') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::Offer }}" class="nav-link">
                                     Curriculum Vitae (Offer) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Offer)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::Onboard }}" class="nav-link">
                                     Curriculum Vitae (Onboard) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Onboard)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::Reject }}" class="nav-link">
                                     Curriculum Vitae (Reject) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::Reject)->count('id') }}</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/report/total_cv_type/{{$item->id}}/{{ \App\Enums\Status::working }}" class="nav-link">
                                     Curriculum Vitae (Working) <span class="float-right badge bg-danger">{{ $item->cv->where('status', \App\Enums\Status::working)->count('id') }}</span>
                                 </a>
                             </li>

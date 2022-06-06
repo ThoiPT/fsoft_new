@@ -28,8 +28,11 @@ class Department extends Model
         return $this->recruit->count('id');
     }
 
+
     public function cv(){
         return $this->hasManyThrough(CV::class, Recruit::class);
     }
+
+//    Department::find(1)->cv->where('status', 2)->get();
 
 }

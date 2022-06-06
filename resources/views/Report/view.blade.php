@@ -112,16 +112,16 @@
                             <div class="row">
                                 <div class="col">
                                     <label>From</label>
-                                    <input type="date" name="start_date" class="form-control" >
+                                    <input type="date" name="start_date" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label>To</label>
-                                    <input type="date" name="end_date"  class="form-control" >
+                                    <input type="date" name="end_date"  class="form-control">
                                 </div>
                                 <div class="col">
                                     <label>Department</label>
                                     <select class="form-select" name="department_name">
-                                        <option disabled selected="">Choose Department</option>
+                                        <option value="all">All Department</option>
                                         @foreach($department_list as $item)
                                             <option value="{{ $item -> id }}">{{ $item -> name }}</option>
                                         @endforeach
@@ -136,21 +136,21 @@
                             </div>
                             <br>
 
-                            <div class="alert alert-success" role="alert" id="timeReport">
-                                Time report From: <a id="fromDate">
-                                    @if( $from == null )
-                                        ALL
-                                    @else
-                                        {{ $from }}
-                                    @endif
-                                </a> To: <a id="toDate">
-                                    @if( $to == null )
-                                        ALL
-                                    @else
-                                        {{ $to }}
-                                    @endif
-                                </a>
-                            </div>
+{{--                            <div class="alert alert-success" role="alert" id="timeReport">--}}
+{{--                                Time report From: <a id="fromDate">--}}
+{{--                                    @if( $from == null )--}}
+{{--                                        ALL--}}
+{{--                                    @else--}}
+{{--                                        {{ $from }}--}}
+{{--                                    @endif--}}
+{{--                                </a> To: <a id="toDate">--}}
+{{--                                    @if( $to == null )--}}
+{{--                                        ALL--}}
+{{--                                    @else--}}
+{{--                                        {{ $to }}--}}
+{{--                                    @endif--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
 
                         </form>
                         <table id="table-dashboard" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
@@ -167,8 +167,10 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             @foreach($department_list as $item)
-                                <tr class="odd">
+                                @if( $check_department == "department_$item->id" || $check_department == false)
+                                <tr class="odd" id="department_{{ $item->id }}">
                                     <td> {{ $item -> name }}</td>
                                     <td>{{ $item -> recruit_total }}</td>
                                     <td>{{ $item -> cv_total }}</td>
@@ -178,7 +180,9 @@
                                     <td>{{ $item -> cv_reject }}</td>
                                     <td>{{ $item -> cv_working }}</td>
                                 </tr>
+                                @endif
                             @endforeach
+
                             </tbody>
                             <tfoot>
                             <tr>

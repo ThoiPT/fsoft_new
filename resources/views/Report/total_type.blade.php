@@ -7,7 +7,7 @@
     </style>
     <div class="card">
         <div class="card-header">
-            <a class="btn btn-danger" style="font-weight: bold">List of Curriculum Vitae </a> <a class="btn btn-warning" style="font-weight: bold">Interview</a>
+            <a class="btn btn-danger" style="font-weight: bold">List of Curriculum Vitae </a> <a class="btn btn-success" style="font-weight: bold">New</a>
             <a href= "{{ route('cv.create') }}" class="btn btn-outline-danger" style="font-weight: bold; float: right">New CV</a>
         </div>
         <!-- /.card-header -->
@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($list as $item)
+                            @foreach($total_cv_new as $item)
                                 <tr class="odd" id="cv-tr-{{ $item->id }}">
                                     <td class="dtr-control" tabindex="0">{{ $item -> id }}</td>
                                     @if($item -> status == \App\Enums\Status::New)
@@ -67,10 +67,11 @@
                                     <td>{{ $item -> name }}</td>
                                     <td>{{ $item -> phone }}</td>
                                     <td>{{ $item -> address }}</td>
+
                                     <td>
                                         <a class="btn btn-outline-primary" href={{ asset('storage/'.$item->file) }}>Download File</a>
-                                        {{--                                    <iframe src="{{ asset('storage/'.$item->file) }}" class="embed-responsive-item"></iframe>--}}
-                                        {{--                                    <iframe src="{{\Illuminate\Support\Facades\Storage::url($item->file) }}"></iframe>--}}
+{{--                                                                            <iframe src="{{ asset('storage/'.$item->file) }}" class="embed-responsive-item"></iframe>--}}
+{{--                                                                            <iframe src="{{\Illuminate\Support\Facades\Storage::url($item->file) }}"></iframe>--}}
                                     </td>
                                     <td>
                                         <!-- Example single danger button -->
@@ -156,3 +157,8 @@
 
 
 @endsection
+
+{{--@foreach($list as $i)--}}
+{{--    {{ $i -> id }} - {{ $i -> name }} {{ $i -> recruit -> department -> name }}<br>--}}
+{{--@endforeach--}}
+

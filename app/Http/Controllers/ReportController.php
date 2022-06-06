@@ -31,17 +31,37 @@ class ReportController extends Controller
     public function index(Request $request)
     {
 
+
+////     EMPOYEE:
+//       if (Auth::user()->role == UserRole::Employee){
+//           $user_department = Auth::user()->department;
+//
+//           return ;
+//       }
+
+       //ADMIN:
         $recruit_list = Recruit::where('status',1)->get();
         $department_list = Department::all();
 
-        $from = date('Y-m-d H:i:s', strtotime($request->start_date));
-        $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
-        $depart = $request->department_name;
+        if(isset($request->start_date) && isset($request->end_date)){
+            $from = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $to = date('Y-m-d H:i:s', strtotime(date($request->end_date) . ' +1 day'));
+        }else{
+            $from = date('Y-m-d H:i:s', strtotime("01-01-0001"));
+            $to = date('Y-m-d H:i:s', strtotime( date("d-m-Y H:i:s") . '+10 year'));
+        }
 
+        $depart = $request->department_name;
         $list_cv = null;
+        //check pick department
+        $check_department = false;
+        $vacancy_list = Vacancy::all();
+        $account_list = User::all();
+        $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
+
 
         // Không chọn Department
-        if (isset($request->start_date) && isset($request->end_date) && !isset($request->department_name)) {
+        if (!isset($request->department_name) || $request->department_name=="all") {
             $department_list = Department::select("id","name")
                 ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($from, $to){
                     $query
@@ -76,10 +96,8 @@ class ReportController extends Controller
                         ->where('c_v_s.status','=',Status::working)
                         ->whereBetween('c_v_s.created_at',[$from, $to]);
                 }]) ->get();
-        }
-
-        // Chọn cả 3
-        if (isset($request->start_date) && isset($request->end_date) && isset($request->department_name)) {
+        }else{
+            $check_department = "department_".$request->department_name;
             $department_list = Department::select("id","name")
                 ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($from, $to, $depart){
                     $query
@@ -124,10 +142,6 @@ class ReportController extends Controller
                 ->get();
         }
 
-        $vacancy_list = Vacancy::all();
-        $account_list = User::all();
-        $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
-
         return view('Report/view', compact(
                                         'recruit_list',
                                       'vacancy_list',
@@ -136,7 +150,8 @@ class ReportController extends Controller
                                                 'department_list',
                                                 'list_cv',
                                                 'from',
-                                                'to'
+                                                'to',
+                                                'check_department'
             ));
     }
 
@@ -147,25 +162,17 @@ class ReportController extends Controller
         return view('Report.total_recruit',compact('department_list','list'));
     }
 
-//    public function total_cv($id1, $id2){
-//        $dp = Department::all();
-//        $list = CV::where('recruit_id',$id1)->where('department_id',$dp->$id2)->get();
-//        return view('Report.total_cv',compact('list'));
-//    }
-
-    public function total_new($id){
-//        $list = CV::where('status',Status::New)->get();
-        $list = CV::all();
-        $department_list = Department::all();
-//        $list = CV::where('status',2)->where('recruit_id',6)->get();
-        return view('Report.total_new',compact('list','department_list'));
+    public function total_cv($id){
+        $total_cv = Department::find($id)->cv;
+        return view('Report.total_cv',compact('total_cv'));
     }
 
-    public function total_interview(){
-        $list = CV::where('status',Status::Interview);
-        return view('Report.total_interview',compact('list'));
+    public function total_index($id, $status){
+        $total_cv_new = Department::find($id)->cv->where('status', $status);
+        return view('Report.total_type',compact(
+            'total_cv_new',
+        ));
     }
-
 
     public function logout()
     {

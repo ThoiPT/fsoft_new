@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($list as $item)
+                            @foreach($total_cv as $item)
                                 <tr class="odd" id="cv-tr-{{ $item->id }}">
                                     <td class="dtr-control" tabindex="0">{{ $item -> id }}</td>
                                     @if($item -> status == \App\Enums\Status::New)
