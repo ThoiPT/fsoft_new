@@ -33,6 +33,11 @@ Route::get('/', function () {
 //    return view ("auth/login");
 });
 
+Route::get('/ple', function(){
+    $list = \App\Models\Department::find(1)->count_vacancy();
+    return $list;
+});
+
 
 Route::resource('recruits', RecruitController::class)->middleware(['auth']);
 Route::resource('skills', SkillController::class)->middleware(['auth']);
@@ -44,6 +49,7 @@ Route::resource('recruit_skills', RecruitSkillController::class)->middleware(['a
 
 //Other Controller
 Route::get('/report',[ReportController::class,'index'])->middleware(['auth'])->name('report');
+Route::get('/report-export',[ReportController::class,'export'])->middleware(['auth'])->name('export');
 Route::get('/report/total_recruit/{id}/{name}',[ReportController::class,'total_recruit'])->middleware(['auth']);
 Route::get('/report/total_cv/{id_department}',[ReportController::class,'total_cv'])->middleware(['auth']);
 Route::get('/report/total_cv_type/{id}/{status}',[ReportController::class,'total_index'])->middleware(['auth']);

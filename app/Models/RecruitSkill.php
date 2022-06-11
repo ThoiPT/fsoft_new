@@ -16,7 +16,7 @@ class RecruitSkill extends Model
 
     public function recruit()
     {
-        return $this->belongsTo(Recruit::class);
+        return $this->belongsTo(Recruit::class,'recruit_id');
     }
 
     public function skill()

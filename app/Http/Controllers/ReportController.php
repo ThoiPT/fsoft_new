@@ -11,6 +11,11 @@ use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use App\Exports\AllExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ReportController extends Controller
 {
     /**
@@ -39,9 +44,13 @@ class ReportController extends Controller
 //           return ;
 //       }
 
+
+
        //ADMIN:
         $recruit_list = Recruit::where('status',1)->get();
         $department_list = Department::all();
+
+//        $test = Department::find($request->id_vacancy)->count_vacancy();
 
         if(isset($request->start_date) && isset($request->end_date)){
             $from = date('Y-m-d H:i:s', strtotime($request->start_date));
@@ -52,6 +61,7 @@ class ReportController extends Controller
         }
 
         $depart = $request->department_name;
+
         $list_cv = null;
         //check pick department
         $check_department = false;
@@ -60,8 +70,19 @@ class ReportController extends Controller
         $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
 
 
-        // Không chọn Department
-        if (!isset($request->department_name) || $request->department_name=="all") {
+
+        $month = $request->month;
+//        if(isset($request->month)){
+//            $department_list = Department::select('id','name')
+//                ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($month){
+//                    $query
+//                        ->whereMonth('created_at',$month);
+//                }])->get();
+//        }
+
+
+//        // Không chọn Department
+        if (!isset($request->department_name) || $request->department_name == "all") {
             $department_list = Department::select("id","name")
                 ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($from, $to){
                     $query
@@ -96,6 +117,7 @@ class ReportController extends Controller
                         ->where('c_v_s.status','=',Status::working)
                         ->whereBetween('c_v_s.created_at',[$from, $to]);
                 }]) ->get();
+
         }else{
             $check_department = "department_".$request->department_name;
             $department_list = Department::select("id","name")
@@ -142,6 +164,8 @@ class ReportController extends Controller
                 ->get();
         }
 
+
+
         return view('Report/view', compact(
                                         'recruit_list',
                                       'vacancy_list',
@@ -151,7 +175,7 @@ class ReportController extends Controller
                                                 'list_cv',
                                                 'from',
                                                 'to',
-                                                'check_department'
+                                                'check_department',
             ));
     }
 
@@ -172,6 +196,10 @@ class ReportController extends Controller
         return view('Report.total_type',compact(
             'total_cv_new',
         ));
+    }
+
+    public function export(User $team){
+        return Excel::download(new AllExport, 'users.xlsx');
     }
 
     public function logout()

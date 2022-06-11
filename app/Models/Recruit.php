@@ -41,7 +41,7 @@ class Recruit extends Model
 
     public function recruit_skill()
     {
-        return $this->hasMany(RecruitSkill::class);
+        return $this->hasMany(RecruitSkill::class,'recruit_id','id');
     }
 
     public function cv()
