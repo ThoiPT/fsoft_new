@@ -128,18 +128,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group"></div>
-{{--                                <div class="col">--}}
-{{--                                    <label>Select Month</label>--}}
-{{--                                    <input type="month" name="month" class="form-control">--}}
-{{--                                </div>--}}
-{{--                                <div class="col">--}}
-{{--                                    <label>Select Week</label>--}}
-{{--                                    <input type="week" name="week" class="form-control">--}}
-{{--                                </div>--}}
-
                                     <div class="col">
-                                        <label>Export File</label>
-                                        <a class="btn btn-warning float-end" href="{{ route('export') }}">Export User Data</a>
+                                        <a style="font-weight: bold; color: white" class="btn btn-warning float-end" href="{{ route('export') }}">Export User Data</a>
                                     </div>
                                 <button style="max-width: 31%; margin: 0px 13px" class="btn btn-primary" type="submit"> Search </button>
                             </div>
@@ -162,20 +152,17 @@
 {{--                            </div>--}}
 
                         </form>
-                        <table id="table-dashboard" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                             <tr>
-
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Department</th>
-                                @foreach($vacancy_list as $item)
-                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="descending">{{ $item->name }}</th>
-{{--                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Curriculum Vitae</th>--}}
-{{--                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Interview</th>--}}
-{{--                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Offer</th>--}}
-{{--                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Onboard</th>--}}
-{{--                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Reject</th>--}}
-{{--                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Working</th>--}}
-                                @endforeach
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="descending">Recruit</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Curriculum Vitae</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Interview</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Offer</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Onboard</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Reject</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Working</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -184,48 +171,23 @@
                                 @if( $check_department == "department_$item->id" || $check_department == false)
                                 <tr class="odd" id="department_{{ $item->id }}">
                                     <td> {{ $item -> name }}</td>
-                                    {{--<td>{{ $item -> recruit_total }}</td>
+                                    <td>{{ $item -> recruit_total }}</td>
                                     <td>{{ $item -> cv_total }}</td>
                                     <td>{{ $item -> cv_interview }}</td>
                                     <td>{{$item->cv_offer}}</td>
                                     <td>{{ $item->cv_onboard }}</td>
                                     <td>{{ $item -> cv_reject }}</td>
-                                    <td>{{ $item -> cv_working }}</td>--}}
-                                    @foreach($vacancy_list as $i)
-                                        <td>{{ $item -> count_vacancy()->where('id',$i->id)}}</td>
-{{--                                        <td>{{ $i->count_vacancy() }}</td>--}}
-                                    @endforeach
-{{--                                    <td> {{ $item -> count_vacancy() }}</td>--}}
+                                    <td>{{ $item -> cv_working }}</td>
                                 </tr>
                                 @endif
                             @endforeach
                             </tbody>
-{{--                            <tfoot>--}}
-{{--                            <tr>--}}
-{{--                                <th rowspan="1" colspan="1">Department</th>--}}
-{{--                                <th rowspan="1" colspan="1">Request</th>--}}
-{{--                                <th rowspan="1" colspan="1">Curriculum Vitae</th>--}}
-{{--                                <th rowspan="1" colspan="1">Interview</th>--}}
-{{--                                <th rowspan="1" colspan="1">Offer</th>--}}
-{{--                                <th rowspan="1" colspan="1">Onboard</th>--}}
-{{--                                <th rowspan="1" colspan="1">Reject</th>--}}
-{{--                                <th rowspan="1" colspan="1">Working</th>--}}
-{{--                            </tr>--}}
-{{--                            </tfoot>--}}
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-{{--    @foreach($recruit_list as $item)--}}
-{{--        {{ $item -> id }} - {{ $item -> title }} - {{ $item -> department -> name }} - {{ $item -> user -> email }} - {{ $item -> vacancy -> name }} - {{ $item -> numRecruit }}<br>--}}
-{{--    @endforeach--}}
-
-{{--        @foreach($department_list as $i)--}}
-{{--            {{ $i -> name }} <br> {{ $i -> recruit -> name }}--}}
-{{--        @endforeach--}}
     </div>
-
 @endsection
 @push('js')
     <script>
@@ -233,13 +195,13 @@
 
             $('#frmSearch').on('submit', function (e){
                 e.preventDefault();
-                const table = $('#table-dashboard');
+                const table = $('#example1');
                 $.ajax({
                     method: "GET",
                     url: $(this).attr('action'),
                     data: $(this).serialize()
                 }).done(function (response) {
-                    const html = $(response).find('#table-dashboard').html();
+                    const html = $(response).find('#example1').html();
                     table.html(html);
                 })
             })

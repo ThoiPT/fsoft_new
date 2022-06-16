@@ -32,9 +32,7 @@ class Department extends Model
         return $this->hasManyThrough(CV::class, Recruit::class);
     }
 
-
 //    Department::find(1)->cv->where('status', 2)->get();
-
 
     public function list_vacancy(){
         $recruits = $this->recruit;
@@ -50,7 +48,6 @@ class Department extends Model
     public function count_vacancy(){
         $recruits = $this->recruit;
         $vacancies_id = [];
-
         foreach ($recruits as $recruit) {
             $vacancies_id[] = Vacancy::find($recruit->vacancy->id)->id;
         }

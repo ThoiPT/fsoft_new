@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Exports\AllExport;
 use Maatwebsite\Excel\Facades\Excel;
+use function Symfony\Component\Translation\t;
 
 class ReportController extends Controller
 {
@@ -35,22 +36,21 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-
-
-////     EMPOYEE:
-//       if (Auth::user()->role == UserRole::Employee){
-//           $user_department = Auth::user()->department;
-//
-//           return ;
-//       }
-
-
-
        //ADMIN:
         $recruit_list = Recruit::where('status',1)->get();
         $department_list = Department::all();
+//        $getID = Vacancy::select('id')->get()->toArray();
+        $getID = Vacancy::select('id')->get()->toArray();
+//        dd($getID);
+//        dd($getID);
+
 
 //        $test = Department::find($request->id_vacancy)->count_vacancy();
+
+
+
+
+
 
         if(isset($request->start_date) && isset($request->end_date)){
             $from = date('Y-m-d H:i:s', strtotime($request->start_date));
@@ -68,18 +68,6 @@ class ReportController extends Controller
         $vacancy_list = Vacancy::all();
         $account_list = User::all();
         $cvOnboard = CV::where('status', '=', Status::Onboard)->get();
-
-
-
-        $month = $request->month;
-//        if(isset($request->month)){
-//            $department_list = Department::select('id','name')
-//                ->withCount(['recruit','recruit as recruit_total'=> function($query) use ($month){
-//                    $query
-//                        ->whereMonth('created_at',$month);
-//                }])->get();
-//        }
-
 
 //        // Không chọn Department
         if (!isset($request->department_name) || $request->department_name == "all") {
@@ -164,23 +152,21 @@ class ReportController extends Controller
                 ->get();
         }
 
-
-
-        return view('Report/view', compact(
-                                        'recruit_list',
-                                      'vacancy_list',
-                                                'account_list',
-                                                'cvOnboard',
-                                                'department_list',
-                                                'list_cv',
-                                                'from',
-                                                'to',
-                                                'check_department',
-            ));
+        $context = [
+            'recruit_list' => $recruit_list,
+            'vacancy_list' => $vacancy_list,
+            'account_list' => $account_list,
+            'cvOnboard' => $cvOnboard,
+            'department_list' => $department_list,
+            'list_cv' => $list_cv,
+            'from' => $from,
+            'to' => $to,
+            'check_department' => $check_department
+            ];
+        return view('Report/view', $context);
     }
 
     public function total_recruit($id){
-//        $list = Recruit::all();
         $list = Recruit::where('department_id',$id)->get();
         $department_list = Department::all();
         return view('Report.total_recruit',compact('department_list','list'));
@@ -199,7 +185,7 @@ class ReportController extends Controller
     }
 
     public function export(User $team){
-        return Excel::download(new AllExport, 'users.xlsx');
+        return Excel::download(new AllExport, 'report.xlsx');
     }
 
     public function logout()
