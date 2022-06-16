@@ -9,13 +9,10 @@ use App\Models\Recruit;
 use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 use App\Exports\AllExport;
 use Maatwebsite\Excel\Facades\Excel;
-use function Symfony\Component\Translation\t;
 
 class ReportController extends Controller
 {
